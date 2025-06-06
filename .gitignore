@@ -1,0 +1,13 @@
+# .gitignore
+*.pdb
+*.ilk
+
+.vs/
+.idea/
+
+.vscode/*
+!.vscode/launch.json
+
+build/
+out/
+config.cmd
