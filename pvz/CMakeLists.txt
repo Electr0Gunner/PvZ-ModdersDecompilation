@@ -74,7 +74,7 @@ set(ALL_GROUPED_FILES ${SOURCE_FILES} ${HEADER_FILES})
 
 add_executable(${PROJECT_NAME} ${ALL_GROUPED_FILES})
 
-target_link_libraries(${PROJECT_NAME} PopLib TodLib)
+target_link_libraries(${PROJECT_NAME} PUBLIC PopLib TodLib)
 
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
