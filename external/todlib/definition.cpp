@@ -7,6 +7,8 @@
 #include <PopLib/debug/perftimer.hpp>
 #include <PopLib/readwrite/xmlparser.hpp>
 
+#define _COMPILEXML
+
 DefSymbol gTrailFlagDefSymbols[] = {  //0x69E150
     { 0, "Loops" },                 { -1, nullptr }
 };
@@ -573,13 +575,28 @@ bool IsFileInPakFile(const PopString& theFilePath)
     }
     return aIsInPak;
 }
-
 bool DefinitionIsCompiled(const PopString& theXMLFilePath)
 {
     PopString aCompiledFilePath = DefinitionGetCompiledFilePathFromXMLFilePath(theXMLFilePath);
     if (IsFileInPakFile(aCompiledFilePath))
         return true;
 
+    struct stat attr;
+
+    if (stat(aCompiledFilePath.c_str(), &attr) != 0)
+        return false;
+    time_t aCompiledFileTime = attr.st_mtime;
+
+    if (stat(theXMLFilePath.c_str(), &attr) != 0)
+    {
+        TodTrace("Can't file source file to compile '%s'", theXMLFilePath.c_str());
+        return false;
+    }
+    time_t aXMLFileTime = attr.st_mtime;
+
+    return aXMLFileTime <= aCompiledFileTime;
+
+    /*
     _WIN32_FILE_ATTRIBUTE_DATA lpFileData;
     _FILETIME aCompiledFileTime;
     bool aSucceed = GetFileAttributesEx(aCompiledFilePath.c_str(), _GET_FILEEX_INFO_LEVELS::GetFileExInfoStandard, &lpFileData);
@@ -588,11 +605,12 @@ bool DefinitionIsCompiled(const PopString& theXMLFilePath)
     
     if (!GetFileAttributesEx(theXMLFilePath.c_str(), _GET_FILEEX_INFO_LEVELS::GetFileExInfoStandard, &lpFileData))
     {
-        TodTrace("Can't file source file to compile '%s'", theXMLFilePath);
-        return true;
+        TodTrace(__S("Can't file source file to compile '%s'"), theXMLFilePath.c_str());
+        return false;
     }
     else
         return aSucceed && CompareFileTime(&aCompiledFileTime, &lpFileData.ftLastWriteTime) == 1;
+    */
 }
 
 void DefinitionFillWithDefaults(DefMap* theDefMap, void* theDefinition)
@@ -617,15 +635,15 @@ void DefinitionXmlError(XMLParser* theXmlParser, const char* theFormat, ...)
 
 bool DefinitionReadXMLString(XMLParser* theXmlParser, PopString& theValue)
 {
-    XMLElement aXMLElement;
+    PopLib::XMLElement aXMLElement;
     if (!theXmlParser->NextElement(&aXMLElement))  // 读取下一个 XML 元素
     {
         DefinitionXmlError(theXmlParser, "Missing element value");
         return false;
     }
-    if (aXMLElement.mType == XMLElement::TYPE_END)  // 读取到结束标签则结束处理
+    if (aXMLElement.mType == PopLib::XMLElement::TYPE_END)  // 读取到结束标签则结束处理
         return true;
-    else if (aXMLElement.mType != XMLElement::TYPE_ELEMENT)  // 除结束标签外，正常情况下，此处读取到的应是定义的正片内容
+    else if (aXMLElement.mType != PopLib::XMLElement::TYPE_ELEMENT)  // 除结束标签外，正常情况下，此处读取到的应是定义的正片内容
     {
         DefinitionXmlError(theXmlParser, "unknown element type");
         return false;
@@ -638,7 +656,7 @@ bool DefinitionReadXMLString(XMLParser* theXmlParser, PopString& theValue)
         DefinitionXmlError(theXmlParser, "Can't read element end");
         return false;
     }
-    if (aXMLElement.mType != XMLElement::TYPE_END)  // 正常情况下，此处读取到的应是结束标签
+    if (aXMLElement.mType != PopLib::XMLElement::TYPE_END)  // 正常情况下，此处读取到的应是结束标签
     {
         DefinitionXmlError(theXmlParser, "Missing element end");
         return false;
@@ -835,13 +853,13 @@ bool DefinitionReadField(XMLParser* theXmlParser, DefMap* theDefMap, void* theDe
     if (theXmlParser->HasFailed())
         return false;
 
-    XMLElement aXMLElement;
-    if (!theXmlParser->NextElement(&aXMLElement) || aXMLElement.mType == XMLElement::TYPE_END)  // 读取下一个 XML 元素
+    PopLib::XMLElement aXMLElement;
+    if (!theXmlParser->NextElement(&aXMLElement) || aXMLElement.mType == PopLib::XMLElement::TYPE_END)  // 读取下一个 XML 元素
     {
         *theDone = true;  // 没有下一个元素则表示读取完成
         return true;
     }
-    if (aXMLElement.mType != XMLElement::TYPE_START)  // 正常情况下，此处读取到的应是开始标签，而其他内容在后续的相应函数中读取
+    if (aXMLElement.mType != PopLib::XMLElement::TYPE_START)  // 正常情况下，此处读取到的应是开始标签，而其他内容在后续的相应函数中读取
     {
         DefinitionXmlError(theXmlParser, "Missing element start");
         return false;
@@ -934,7 +952,7 @@ bool DefinitionWriteCompiledFile(const PopString& theCompiledFilePath, DefMap* t
 bool DefinitionCompileFile(const PopString theXMLFilePath, const PopString& theCompiledFilePath, DefMap* theDefMap, void* theDefinition)
 {
     XMLParser aXMLParser;
-    if (!aXMLParser.OpenFile(theXMLFilePath))
+    if (!aXMLParser.OpenFile(theXMLFilePath, "definition"))
     {
         TodTrace("XML file not found: %s\n", theXMLFilePath.c_str());
         return false;
@@ -952,11 +970,11 @@ bool DefinitionCompileAndLoad(const PopString& theXMLFilePath, DefMap* theDefMap
     //Changed to compile from in debug to this preprocessor
 #ifdef _COMPILEXML  // 内测版执行的内容
 
-    TodHesitationTrace(_S("predef"));
+    TodHesitationTrace("predef");
     PopString aCompiledFilePath = DefinitionGetCompiledFilePathFromXMLFilePath(theXMLFilePath);
     if (DefinitionIsCompiled(theXMLFilePath) && DefinitionReadCompiledFile(aCompiledFilePath, theDefMap, theDefinition))
     {
-        TodHesitationTrace(_S("loaded %s"), aCompiledFilePath.c_str());
+        TodHesitationTrace("loaded %s", aCompiledFilePath.c_str());
         return true;
     }
     else
@@ -964,8 +982,8 @@ bool DefinitionCompileAndLoad(const PopString& theXMLFilePath, DefMap* theDefMap
         PerfTimer aTimer;
         aTimer.Start();
         bool aResult = DefinitionCompileFile(theXMLFilePath, aCompiledFilePath, theDefMap, theDefinition);
-        TodTrace(_S("compile %d ms:'%s'"), (int)aTimer.GetDuration(), aCompiledFilePath.c_str());
-        TodHesitationTrace(_S("compiled %s"), aCompiledFilePath.c_str());
+        TodTrace("compile %d ms:'%s'", (int)aTimer.GetDuration(), aCompiledFilePath.c_str());
+        TodHesitationTrace("compiled %s", aCompiledFilePath.c_str());
         return aResult;
     }
 

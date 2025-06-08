@@ -10,14 +10,7 @@ set(FILTERED_FILES "")
 foreach(FILE_PATH ${ALL_FILES})
     file(RELATIVE_PATH REL_PATH "${CMAKE_CURRENT_SOURCE_DIR}" "${FILE_PATH}")
     string(REPLACE "\\" "/" REL_PATH "${REL_PATH}") # normalize for Windows
-
-    if(REL_PATH MATCHES "^toddrawtriangle\\.(cpp|h)$")
-        list(APPEND FILTERED_FILES "${FILE_PATH}")
-    elseif(REL_PATH MATCHES "^toddrawtriangle/")
-        continue()
-    else()
-        list(APPEND FILTERED_FILES "${FILE_PATH}")
-    endif()
+    list(APPEND FILTERED_FILES "${FILE_PATH}")
 endforeach()
 
 set(ALL_FILES ${FILTERED_FILES})
@@ -71,7 +64,6 @@ endforeach()
 
 set(ALL_GROUPED_FILES ${SOURCE_FILES} ${HEADER_FILES})
 
-
 add_executable(${PROJECT_NAME} ${ALL_GROUPED_FILES})
 
 target_link_libraries(${PROJECT_NAME} PUBLIC PopLib TodLib)
@@ -79,3 +71,15 @@ target_link_libraries(${PROJECT_NAME} PUBLIC PopLib TodLib)
 target_include_directories(${PROJECT_NAME} PUBLIC
     ${CMAKE_CURRENT_SOURCE_DIR}
 )
+
+
+set_target_properties(${PROJECT_NAME}
+    PROPERTIES
+    RUNTIME_OUTPUT_DIRECTORY "${CMAKE_SOURCE_DIR}/out"
+    RUNTIME_OUTPUT_DIRECTORY_DEBUG "${CMAKE_SOURCE_DIR}/out"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_SOURCE_DIR}/out"
+    RUNTIME_OUTPUT_NAME ${PROJECT_NAME}
+)
+
+include(${CMAKE_SOURCE_DIR}/engine/cmake/CopyDLLPost.cmake)
+copy_dll_post(${PROJECT_NAME} ${BASS_PATH})
