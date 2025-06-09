@@ -1185,6 +1185,25 @@ bool TodFindImagePath(Image* theImage, std::string* thePath)
 	return ((TodResourceManager*)gAppBase->mResourceManager)->FindImagePath(theImage, thePath);
 }
 
+bool TodFindFontPath(Font* theFont, std::string* thePath) {
+	return ((TodResourceManager*)gAppBase->mResourceManager)->FindFontPath(theFont, thePath);
+}
+
+bool TodResourceManager::FindFontPath(Font* theFont, std::string* thePath)
+{
+	for (auto anItr = mFontMap.begin(); anItr != mFontMap.end(); anItr++)
+	{
+		FontRes* aFontRes = (FontRes*)anItr->second;
+		Font* aFont = (Font*)aFontRes->mFont;
+		if (aFont == theFont)
+		{
+			*thePath = anItr->first;
+			return true;
+		}
+	}
+	return false;
+}
+
 bool TodResourceManager::FindImagePath(Image* theImage, std::string* thePath)
 {
 	for (auto anItr = mImageMap.begin(); anItr != mImageMap.end(); anItr++)

@@ -46,20 +46,21 @@ bool Music::TodLoadMusic(MusicFile theMusicFile, const std::string& theFileName)
 	if (aDot != std::string::npos)  // 文件名中不含“.”（文件无扩展名）
 		anExt = StringToLower(theFileName.substr(aDot + 1));  // 取得小写的文件扩展名
 
+	PFILE* pFile = p_fopen(theFileName.c_str(), "rb");
+	if (pFile == nullptr)
+		return false;
+
+	p_fseek(pFile, 0, SEEK_END);  // 指针调整至文件末尾
+	int aSize = p_ftell(pFile);  // 当前位置即为文件长度
+	p_fseek(pFile, 0, SEEK_SET);  // 指针调回文件开头
+	void* aData = operator new[](aSize);
+	p_fread(aData, sizeof(char), aSize, pFile);  // 按字节读取数据
+	p_fclose(pFile);  // 关闭文件流
+
+
 	if (anExt.compare("wav") && anExt.compare("ogg") && anExt.compare("mp3"))  // 如果不是这三种拓展名
 	{
-		PFILE* pFile = p_fopen(theFileName.c_str(), "rb");
-		if (pFile == nullptr)
-			return false;
-
-		p_fseek(pFile, 0, SEEK_END);  // 指针调整至文件末尾
-		int aSize = p_ftell(pFile);  // 当前位置即为文件长度
-		p_fseek(pFile, 0, SEEK_SET);  // 指针调回文件开头
-		void* aData = operator new[](aSize);
-		p_fread(aData, sizeof(char), aSize, pFile);  // 按字节读取数据
-		p_fclose(pFile);  // 关闭文件流
-
-		aHMusic = BASS_MusicLoad(true, aData, 0, 0, aBass->mMusicLoadFlags, 0);
+		aHMusic = BASS_MusicLoad(true, aData, 0, aSize, aBass->mMusicLoadFlags, 0);
 		delete[] aData;
 
 		if (aHMusic == NULL)
@@ -67,17 +68,6 @@ bool Music::TodLoadMusic(MusicFile theMusicFile, const std::string& theFileName)
 	}
 	else
 	{
-		PFILE* pFile = p_fopen(theFileName.c_str(), "rb");
-		if (pFile == nullptr)
-			return false;
-
-		p_fseek(pFile, 0, SEEK_END);  // 指针调整至文件末尾
-		int aSize = p_ftell(pFile);  // 当前位置即为文件长度
-		p_fseek(pFile, 0, SEEK_SET);  // 指针调回文件开头
-		void* aData = operator new[](aSize);
-		p_fread(aData, sizeof(char), aSize, pFile);  // 按字节读取数据
-		p_fclose(pFile);  // 关闭文件流
-		
 		aStream = BASS_StreamCreateFile(true, aData, 0, aSize, 0);
 		TOD_ASSERT(gMusicFileData[theMusicFile].mFileData == nullptr);
 		gMusicFileData[theMusicFile].mFileData = (unsigned int*)aData;
@@ -139,13 +129,13 @@ void Music::SetupMusicFileForTune(MusicFile theMusicFile, MusicTune theMusicTune
 	HMUSIC aHMusic = GetBassMusicHandle(theMusicFile);
 	for (int aTrack = 0; aTrack < aTrackCount; aTrack++)
 	{
-		int aVolume;
+		float aVolume;
 		if (aTrack >= aTrackStart1 && aTrack <= aTrackEnd1)
-			aVolume = 100;
+			aVolume = 1.0f;
 		else if (aTrack >= aTrackStart2 && aTrack <= aTrackEnd2)
-			aVolume = 100;
+			aVolume = 1.0f;
 		else
-			aVolume = 0;
+			aVolume = 0.0f;
 
 		BASS_ChannelSetAttribute(aHMusic, BASS_ATTRIB_MUSIC_VOL_CHAN + aTrack, aVolume);  // 设置音乐每条轨道的音量属性（静音与否）
 	}
@@ -261,8 +251,8 @@ void Music::PlayFromOffset(MusicFile theMusicFile, int theOffset, double theVolu
 		aMusicInfo->mVolumeAdd = 0.0;
 		BASS_ChannelSetAttribute(aMusicInfo->mHMusic, BASS_ATTRIB_MUSIC_VOL_GLOBAL, aMusicInfo->mVolume * 100.0);
 		BASS_ChannelFlags(aMusicInfo->mHMusic, BASS_MUSIC_POSRESET | BASS_MUSIC_RAMP | BASS_MUSIC_LOOP, -1);
-		BASS_ChannelSetPosition(aMusicInfo->mHMusic, theOffset | 0x80000000, BASS_POS_BYTE);  // 设置偏移位置
-		BASS_ChannelPlay(aMusicInfo->mHMusic, false);  // 重新开始播放
+		BASS_ChannelSetPosition(aMusicInfo->mHMusic, theOffset, BASS_POS_BYTE);  // 设置偏移位置
+		BASS_ChannelPlay(aMusicInfo->mHMusic, false);  
 	}
 }
 
@@ -646,7 +636,7 @@ void Music::UpdateMusicBurst()
 		mMusicInterface->SetSongVolume(mCurMusicFileMain, aMainTrackVolume);
 		mMusicInterface->SetSongVolume(mCurMusicFileDrums, aDrumsVolume);
 		if (aDrumsJumpOrder != -1)
-			BASS_ChannelSetPosition(GetBassMusicHandle(mCurMusicFileDrums), LOWORD(aDrumsJumpOrder) | 0x80000000, BASS_POS_BYTE);
+			BASS_ChannelSetPosition(GetBassMusicHandle(mCurMusicFileDrums), LOWORD(aDrumsJumpOrder), BASS_POS_BYTE);
 	}
 }
 

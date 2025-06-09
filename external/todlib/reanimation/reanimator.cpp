@@ -335,13 +335,21 @@ void Reanimation::ReanimationInitializeType(float theX, float theY, ReanimationT
 	TOD_ASSERT(theReanimType >= 0 && theReanimType < gReanimatorDefCount);
 	ReanimatorEnsureDefinitionLoaded(theReanimType, false);
 	mReanimationType = theReanimType;
+#ifndef _WIN64
 	ReanimationInitialize(theX, theY, &gReanimatorDefArray[(int)theReanimType]);
+#else
+	ReanimationInitialize(theX, theY, &gReanimatorDefArray[(uintptr_t)theReanimType]);
+#endif
 }
 
 //0x471A90
 void ReanimationCreateAtlas(ReanimatorDefinition* theDefinition, ReanimationType theReanimationType)
 {
+#ifndef _WIN64
 	ReanimationParams& aParam = gReanimationParamArray[(int)theReanimationType];
+#else
+	ReanimationParams& aParam = gReanimationParamArray[(uintptr_t)theReanimationType];
+#endif
 	if (theDefinition->mReanimAtlas != nullptr || TestBit(aParam.mReanimParamFlags, ReanimFlags::REANIM_NO_ATLAS))
 		return;  // 当动画已存在 Atlas 或无需 Atlas 时，直接退出
 
@@ -1112,10 +1120,18 @@ Reanimation* ReanimationHolder::AllocReanimation(float theX, float theY, int the
 void ReanimatorEnsureDefinitionLoaded(ReanimationType theReanimType, bool theIsPreloading)
 {
 	TOD_ASSERT(theReanimType >= 0 && theReanimType < gReanimatorDefCount);
-	ReanimatorDefinition* aReanimDef = &gReanimatorDefArray[(int)theReanimType];
-	if (aReanimDef->mTracks != nullptr)  // 如果轨道指针不为空指针，说明定义数据已经加载
+#ifdef _WIN64
+	ReanimatorDefinition *aReanimDef = &gReanimatorDefArray[(uintptr_t)theReanimType];
+#else
+	ReanimatorDefinition *aReanimDef = &gReanimatorDefArray[(int)theReanimType];
+#endif
+	if (aReanimDef->mTracks != nullptr)  
 		return;
-	ReanimationParams* aReanimParams = &gReanimationParamArray[(int)theReanimType];
+#ifdef _WIN64
+	ReanimationParams* aReanimParams = &gReanimationParamArray[(uintptr_t)theReanimType];
+#else
+	ReanimationParams *aReanimParams = &gReanimationParamArray[(int)theReanimType];
+#endif
 	if (theIsPreloading)
 	{
 		if (gAppBase->mShutdown || gAppCloseRequest())  // 预加载时若程序退出，则取消加载
