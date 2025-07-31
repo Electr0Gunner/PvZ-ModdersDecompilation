@@ -4,7 +4,7 @@
 #include "constenums.hpp"
 #include "gameconstants.hpp"
 #include <todlib/effects/filtereffect.hpp>
-#include <Poplib/graphics/graphics.hpp>
+#include <graphics/graphics.hpp>
 
 #define BEGHOULED_MAX_GRIDSIZEX 8
 #define BEGHOULED_MAX_GRIDSIZEY 5

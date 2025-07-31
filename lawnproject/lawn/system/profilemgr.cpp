@@ -1,7 +1,7 @@
 #include "lawn/system/datasync.hpp"
 #include "lawn/system/profilemgr.hpp"
 #include "lawn/system/playerinfo.hpp"
-#include <Poplib/appbase.hpp>
+#include <appbase.hpp>
 
 using namespace PopLib;
 static int gProfileVersion = 14;

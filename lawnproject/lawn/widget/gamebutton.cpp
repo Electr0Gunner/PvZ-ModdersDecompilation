@@ -2,11 +2,11 @@
 #include "lawnapp.hpp"
 #include "resources.hpp"
 #include <todlib/todcommon.hpp>
-#include <PopLib/graphics/font.hpp>
-#include <PopLib/graphics/sysfont.hpp>
-#include <PopLib/graphics/graphics.hpp>
+#include <graphics/font.hpp>
+#include <graphics/sysfont.hpp>
+#include <graphics/graphics.hpp>
 #include <todlib/todstringfile.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 static Color gGameButtonColors[6] = { Color(0, 0, 0), Color(0, 0, 0), Color(0, 0, 0), Color(255, 255, 255), Color(132, 132, 132), Color(212, 212, 212) };
 

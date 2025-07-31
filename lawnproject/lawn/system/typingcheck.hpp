@@ -2,7 +2,7 @@
 #define __TYPINGCHECK_H__
 
 #include <string>
-#include <Poplib/misc/keycodes.hpp>
+#include <misc/keycodes.hpp>
 
 class TypingCheck
 {

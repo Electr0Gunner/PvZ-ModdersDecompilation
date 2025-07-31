@@ -15,11 +15,11 @@
 #include "gameconstants.hpp"
 #include "lawn/system/playerinfo.hpp"
 #include "lawn/system/popdrmcomm.hpp"
-#include <Poplib/debug/debug.hpp>
-#include <PopLib/widget/dialog.hpp>
-#include <PopLib/math/mtrand.hpp>
+#include <debug/debug.hpp>
+#include <widget/dialog.hpp>
+#include <math/mtrand.hpp>
 #include <todlib/todstringfile.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 //0x483380
 SeedChooserScreen::SeedChooserScreen()
@@ -189,7 +189,7 @@ int SeedChooserScreen::PickFromWeightedArrayUsingSpecialRandSeed(TodWeightedArra
 		aTotalWeight += theArray[i].mWeight;
 	DBG_ASSERT(aTotalWeight > 0);
 
-	int aRndResult = theLevelRNG.Next((unsigned long)aTotalWeight);
+	int aRndResult = theLevelRNG.Next((ulong)aTotalWeight);
 	int aWeight = 0;
 	for (int j = 0; j < theCount; j++)
 	{

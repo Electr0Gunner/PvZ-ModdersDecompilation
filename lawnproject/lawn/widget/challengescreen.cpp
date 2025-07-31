@@ -8,9 +8,9 @@
 #include <todlib/toddebug.hpp>
 #include <todlib/todfoley.hpp>
 #include <todlib/todcommon.hpp>
-#include <Poplib/debug/debug.hpp>
+#include <debug/debug.hpp>
 #include <todlib/todstringfile.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 ChallengeDefinition gChallengeDefs[NUM_CHALLENGE_MODES] = {
 	{ GameMode::GAMEMODE_SURVIVAL_NORMAL_STAGE_1,              0,   ChallengePage::CHALLENGE_PAGE_SURVIVAL,    0,  0,  "[SURVIVAL_DAY_NORMAL]"},

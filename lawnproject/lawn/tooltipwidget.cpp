@@ -2,7 +2,7 @@
 #include "lawn/tooltipwidget.hpp"
 #include "gameconstants.hpp"
 #include <todlib/todcommon.hpp>
-#include <PopLib/graphics/font.hpp>
+#include <graphics/font.hpp>
 #include <todlib/todstringfile.hpp>
 
 using namespace PopLib;

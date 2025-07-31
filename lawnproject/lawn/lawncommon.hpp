@@ -2,8 +2,8 @@
 #define __LAWN_COMMON_H__
 
 #include "constenums.hpp"
-#include <Poplib/graphics/graphics.hpp>
-#include <PopLib/widget/editwidget.hpp>
+#include <graphics/graphics.hpp>
+#include <widget/editwidget.hpp>
 
 using namespace PopLib;
 

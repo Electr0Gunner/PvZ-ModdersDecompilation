@@ -3,8 +3,8 @@
 
 #include "constenums.hpp"
 #include <todlib/dataarray.hpp>
-#include <PopLib/widget/widget.hpp>
-#include <PopLib/widget/buttonlistener.hpp>
+#include <widget/widget.hpp>
+#include <widget/buttonlistener.hpp>
 
 #include "plant.hpp"
 #include "zombie.hpp"
@@ -287,7 +287,7 @@ public:
 	void							UpdateGameObjects();
 	bool							MouseHitTest(int x, int y, HitResult* theHitResult);
 	void							MouseDownWithPlant(int x, int y, int theClickCount);
-	void							MouseDownWithTool(int x, int y, int theClickCount, CursorType theCursorType);
+	void							MouseDownWithTool(int x, int y, int theClickCount, ::LawnCursorType theCursorType);
 	inline void						MouseDownNormal(int x, int y, int theClickCount) { /* 未发现 */; }
 	bool							CanInteractWithBoardButtons();
 	void							DrawProgressMeter(Graphics* g);

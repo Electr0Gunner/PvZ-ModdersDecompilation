@@ -3,7 +3,7 @@
 #include "lawnapp.hpp"
 #include "resources.hpp"
 #include "lawn/messagewidget.hpp"
-#include <Poplib/graphics/font.hpp>
+#include <graphics/font.hpp>
 #include <todlib/todcommon.hpp>
 #include <todlib/reanimation/reanimator.hpp>
 #include <todlib/todstringfile.hpp>

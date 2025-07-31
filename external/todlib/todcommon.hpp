@@ -1,8 +1,8 @@
 #pragma once
 #include <stdlib.h>
 #include <lawn/lawncommon.hpp>
-#include <PopLib/common.hpp>
-#include <PopLib/resources/resourcemanager.hpp>
+#include <common.hpp>
+#include <resources/resourcemanager.hpp>
 
 struct TodAllocator;
 namespace PopLib
@@ -111,7 +111,7 @@ void					TodBltMatrix(Graphics* g, Image* theImage, const Matrix3& theTransform,
 void					TodMarkImageForSanding(Image* theImage);
 void					TodSandImageIfNeeded(Image* theImage);
 void					FixPixelsOnAlphaEdgeForBlending(Image* theImage);
-unsigned long			AverageNearByPixels(MemoryImage* theImage, unsigned long* thePixel, int x, int y);
+ulong			AverageNearByPixels(MemoryImage* theImage, ulong* thePixel, int x, int y);
 void					Tod_SWTri_AddAllDrawTriFuncs();
 
 PopString				TodReplaceString(const PopString& theText, const PopChar* theStringToFind, const PopString& theStringToSubstitute);

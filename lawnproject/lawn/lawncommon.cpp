@@ -6,10 +6,10 @@
 #include "resources.hpp"
 #include "gameconstants.hpp"
 #include <todlib/todcommon.hpp>
-#include <PopLib/graphics/font.hpp>
-#include <PopLib/widget/dialog.hpp>
-#include <PopLib/math/matrix.hpp>
-#include <PopLib/widget/checkbox.hpp>
+#include <graphics/font.hpp>
+#include <widget/dialog.hpp>
+#include <math/matrix.hpp>
+#include <widget/checkbox.hpp>
 
 int gLawnEditWidgetColors[][4] = {
     { 0,   0,   0,   0 },

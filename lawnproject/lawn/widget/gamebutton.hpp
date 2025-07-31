@@ -1,8 +1,8 @@
 #ifndef __GAMEBUTTON_H__
 #define __GAMEBUTTON_H__
 
-#include <PopLib/math/vector.hpp>
-#include <PopLib/widget/dialogbutton.hpp>
+#include <math/vector.hpp>
+#include <widget/dialogbutton.hpp>
 
 using namespace PopLib;
 

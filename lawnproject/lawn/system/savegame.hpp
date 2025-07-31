@@ -3,7 +3,7 @@
 
 #include <string>
 #include <todlib/todlist.hpp>
-#include <PopLib/misc/buffer.hpp>
+#include <misc/buffer.hpp>
 
 class Board;
 class Trail;

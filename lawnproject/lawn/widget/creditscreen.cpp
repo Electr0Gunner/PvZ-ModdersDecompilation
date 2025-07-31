@@ -9,7 +9,7 @@
 #include <todlib/attachment.hpp>
 #include <todlib/reanimation/reanimator.hpp>
 #include <todlib/effects/todparticle.hpp>
-#include <PopLib/widget/dialog.hpp>
+#include <widget/dialog.hpp>
 #include <todlib/effects/effectsystem.hpp>
 #include <todlib/todstringfile.hpp>
 

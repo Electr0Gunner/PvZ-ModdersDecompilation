@@ -2,7 +2,7 @@
 #define __LAWNDIALOG_H__
 
 #include <todlib/todcommon.hpp>
-#include "PopLib/widget/dialog.hpp"
+#include <widget/dialog.hpp>
 
 constexpr const int DIALOG_HEADER_OFFSET = 45;
 

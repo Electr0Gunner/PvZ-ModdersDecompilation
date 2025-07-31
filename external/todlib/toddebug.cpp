@@ -1,10 +1,10 @@
 #include <time.h>
 #include <todlib/toddebug.hpp>
 #include "todlib/todcommon.hpp"
-#include <PopLib/debug/debug.hpp>
-#include <PopLib/debug/errorhandler.hpp>
-#include <PopLib/appbase.hpp>
-#include <PopLib/graphics/sdlinterface.hpp>
+#include <debug/debug.hpp>
+#include <debug/sehcatcher.hpp>
+#include <appbase.hpp>
+#include <graphics/renderer.hpp>
 
 using namespace PopLib;
 
@@ -14,7 +14,7 @@ static char gDebugDataFolder[MAX_PATH];
 //0x514EA0
 void TodErrorMessageBox(const char* theMessage, const char* theTitle)
 {
-	SDL_Window* aWindow = (gAppBase && gAppBase->mSDLInterface->mWindow) ? gAppBase->mSDLInterface->mWindow : SDL_GetKeyboardFocus();
+	SDL_Window* aWindow = (gAppBase && gAppBase->mWindow) ? gAppBase->mWindow : SDL_GetKeyboardFocus();
 	TodTraceAndLog("%s.%s", theMessage, theTitle);
 	SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_WARNING, theTitle, theMessage, aWindow);
 }

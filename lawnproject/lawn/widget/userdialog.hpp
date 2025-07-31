@@ -2,8 +2,8 @@
 #define __USERDIALOG_H__
 
 #include "lawndialog.hpp"
-#include <PopLib/widget/listlistener.hpp>
-#include <PopLib/widget/editlistener.hpp>
+#include <widget/listlistener.hpp>
+#include <widget/editlistener.hpp>
 
 namespace PopLib
 {

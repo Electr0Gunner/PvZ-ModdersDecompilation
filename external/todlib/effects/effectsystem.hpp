@@ -3,8 +3,8 @@
 
 #include "todlib/dataarray.hpp"
 #include "constenums.hpp"
-#include <PopLib/graphics/SWTri/SWTri.hpp>
-#include <Poplib/graphics/graphics.hpp>
+#include <graphics/SWTri/SWTri.hpp>
+#include <graphics/graphics.hpp>
 using namespace PopLib;
 
 #define MAX_TRIANGLES 256

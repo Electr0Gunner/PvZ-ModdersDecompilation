@@ -3,9 +3,9 @@
 #include "resources.hpp"
 #include "gameconstants.hpp"
 #include <todlib/toddebug.hpp>
-#include <PopLib/graphics/sdlimage.hpp>
-#include <PopLib/graphics/graphics.hpp>
-#include <PopLib/graphics/sdlinterface.hpp>
+#include <graphics/gpuimage.hpp>
+#include <graphics/graphics.hpp>
+#include <graphics/renderer.hpp>
 
 //0x469A60
 void PoolEffect::PoolEffectInitialize()
@@ -17,7 +17,7 @@ void PoolEffect::PoolEffectInitialize()
     mCausticImage = new MemoryImage(gAppBase);
     mCausticImage->mWidth = CAUSTIC_IMAGE_WIDTH;
     mCausticImage->mHeight = CAUSTIC_IMAGE_HEIGHT;
-    mCausticImage->mBits = new unsigned long[CAUSTIC_IMAGE_WIDTH * CAUSTIC_IMAGE_HEIGHT + 1];
+    mCausticImage->mBits = new ulong[CAUSTIC_IMAGE_WIDTH * CAUSTIC_IMAGE_HEIGHT + 1];
     mCausticImage->mHasTrans = true;
     mCausticImage->mHasAlpha = true;
     memset(mCausticImage->mBits, 0xFF, CAUSTIC_IMAGE_WIDTH * CAUSTIC_IMAGE_HEIGHT * 4);
@@ -74,7 +74,7 @@ void PoolEffect::UpdateWaterEffect(PopLib::Graphics* g)
 
         for (int x = 0; x < CAUSTIC_IMAGE_WIDTH; x++)
         {
-            unsigned long* pix = &mCausticImage->mBits[idx];
+            ulong* pix = &mCausticImage->mBits[idx];
 
             int timeU = x << 17;
             int timePool0 = mPoolCounter << 16;
@@ -226,7 +226,7 @@ void PoolEffect::PoolEffectDraw(PopLib::Graphics* g, bool theIsNight)
     }
 
     UpdateWaterEffect(g);
-    SDLInterface* anInterface = ((SDLImage*)g->mDestImage)->mInterface;
+
     g->DrawTrianglesTex(mCausticImage, aVertArray[2], 150);
 }
 

@@ -2,7 +2,7 @@
 #define __CHEATDIALOG_H__
 
 #include "lawndialog.hpp"
-#include <PopLib/widget/editlistener.hpp>
+#include <widget/editlistener.hpp>
 
 class CheatDialog : public LawnDialog, public EditListener
 {

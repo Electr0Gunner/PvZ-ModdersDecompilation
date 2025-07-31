@@ -16,10 +16,10 @@
 #include <todlib/todfoley.hpp>
 #include <todlib/todcommon.hpp>
 #include <todlib/reanimation/reanimator.hpp>
-#include <Poplib/debug/debug.hpp>
+#include <debug/debug.hpp>
 #include <todlib/todstringfile.hpp>
-#include <Poplib/graphics/imagefont.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <graphics/imagefont.hpp>
+#include <widget/widgetmanager.hpp>
 
 static StoreItem gStoreItemSpots[NUM_STORE_PAGES][MAX_PAGE_SPOTS] =
 {

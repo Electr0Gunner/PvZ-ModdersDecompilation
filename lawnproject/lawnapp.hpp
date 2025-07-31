@@ -2,7 +2,7 @@
 #define __LAWNAPP_H__
 
 #include "constenums.hpp"
-#include <PopLib/popapp.hpp>
+#include <popapp.hpp>
 
 class Board;
 class GameSelector;

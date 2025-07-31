@@ -3,16 +3,15 @@
 #include <todlib/toddebug.hpp>
 #include "todlib/definition.hpp"
 #include <zlib.h>
-#include <PopLib/paklib/pakinterface.hpp>
-#include <PopLib/debug/perftimer.hpp>
-#include <PopLib/readwrite/xmlparser.hpp>
+#include <paklib/pakinterface.hpp>
+#include <debug/perftimer.hpp>
+#include <readwrite/xmlparser.hpp>
 
-#define _COMPILEXML
 
-DefSymbol gTrailFlagDefSymbols[] = {  
+DefSymbol gTrailFlagDefSymbols[] = {  //0x69E150
     { 0, "Loops" },                 { -1, nullptr }
 };
-DefField gTrailDefFields[] = {  
+DefField gTrailDefFields[] = {  //0x69E160
     { "Image",              0x0,        DefFieldType::DT_IMAGE,         nullptr },
     { "MaxPoints",          0x4,        DefFieldType::DT_INT,           nullptr },
     { "MinPointDistance",   0x8,        DefFieldType::DT_FLOAT,         nullptr },
@@ -24,32 +23,32 @@ DefField gTrailDefFields[] = {
     { "TrailDuration",      0x10,       DefFieldType::DT_TRACK_FLOAT,   nullptr },
     { "",                   0x0,        DefFieldType::DT_INVALID,       nullptr }
 };
-DefMap gTrailDefMap = { gTrailDefFields, sizeof(TrailDefinition), TrailDefinitionConstructor };  
+DefMap gTrailDefMap = { gTrailDefFields, sizeof(TrailDefinition), TrailDefinitionConstructor };  //0x69D98C
 
-DefSymbol gParticleFlagSymbols[] = {  
+DefSymbol gParticleFlagSymbols[] = {  //0x69E290
     {  0, "RandomLaunchSpin" },     {  1, "AlignLaunchSpin" },  {  2, "AlignToPixel" },     {  4, "ParticleLoops" },    {  3, "SystemLoops" },
     {  5, "ParticlesDontFollow" },  {  6, "RandomStartTime" },  {  7, "DieIfOverloaded" },  {  8, "Additive" },         {  9, "FullScreen" },
     { 10, "SoftwareOnly" },         { 11, "HardwareOnly" },     { -1, nullptr }
 };
-DefSymbol gEmitterTypeSymbols[] = {  
+DefSymbol gEmitterTypeSymbols[] = {  //0x69E260
     {  0, "Circle" },               {  1, "Box" },              {  2, "BoxPath" },          {  3, "CirclePath" },       {  4, "CircleEvenSpacing" },
     { -1, nullptr }
 };
-DefSymbol gParticleTypeSymbols[] = {  
+DefSymbol gParticleTypeSymbols[] = {  //0x69E200
     {  1, "Friction" },             {  2, "Acceleration" },     {  3, "Attractor" },        {  4, "MaxVelocity" },      {  5, "Velocity" },
     {  6, "Position" },             {  7, "SystemPosition" },   {  8, "GroundConstraint" }, {  9, "Shake" },            { 10, "Circle" },
     { 11, "Away" },                 { -1, nullptr }
 };
 
-DefField gParticleFieldDefFields[] = {  
+DefField gParticleFieldDefFields[] = {  //0x69E2F8
     { "FieldType",          0x0,        DefFieldType::DT_ENUM,          gParticleTypeSymbols },
     { "x",                  0x4,        DefFieldType::DT_TRACK_FLOAT,   nullptr },
     { "y",                  0xC,        DefFieldType::DT_TRACK_FLOAT,   nullptr },
     { "",                   0x0,        DefFieldType::DT_INVALID,       nullptr },
 };
-DefMap gParticleFieldDefMap = { gParticleFieldDefFields, sizeof(ParticleField), ParticleFieldConstructor };  
+DefMap gParticleFieldDefMap = { gParticleFieldDefFields, sizeof(ParticleField), ParticleFieldConstructor };  //0x69E338
 
-DefField gEmitterDefFields[] = {  
+DefField gEmitterDefFields[] = {  //0x69E350
     { "Image",              0x0,        DefFieldType::DT_IMAGE,         nullptr },
     { "ImageRow",           0x8,        DefFieldType::DT_INT,           nullptr },
     { "ImageCol",           0x4,        DefFieldType::DT_INT,           nullptr },
@@ -101,15 +100,15 @@ DefField gEmitterDefFields[] = {
     { "AnimationRate",      0x15C,      DefFieldType::DT_TRACK_FLOAT,   nullptr },
     { "",                   0x0,        DefFieldType::DT_INVALID,       nullptr },
 };
-DefMap gEmitterDefMap = { gEmitterDefFields, sizeof(TodEmitterDefinition), TodEmitterDefinitionConstructor };  
+DefMap gEmitterDefMap = { gEmitterDefFields, sizeof(TodEmitterDefinition), TodEmitterDefinitionConstructor };  //0x69E344
 
-DefField gParticleDefFields[] = {  
+DefField gParticleDefFields[] = {  //0x69E670
     { "Emitter",            0x0,        DefFieldType::DT_ARRAY,         &gEmitterDefMap },
     { "",                   0x0,        DefFieldType::DT_INVALID,       nullptr }
 };
-DefMap gParticleDefMap = { gParticleDefFields, sizeof(TodParticleDefinition), TodParticleDefinitionConstructor };  
+DefMap gParticleDefMap = { gParticleDefFields, sizeof(TodParticleDefinition), TodParticleDefinitionConstructor };  //0x69E690
 
-DefField gReanimatorTransformDefFields[] = {  
+DefField gReanimatorTransformDefFields[] = {  //0x69F088
     { "x",                  0x0,        DefFieldType::DT_FLOAT,         nullptr },
     { "y",                  0x4,        DefFieldType::DT_FLOAT,         nullptr },
     { "kx",                 0x8,        DefFieldType::DT_FLOAT,         nullptr },
@@ -123,24 +122,25 @@ DefField gReanimatorTransformDefFields[] = {
     { "text",               0x28,       DefFieldType::DT_STRING,        nullptr },
     { "",                   0x0,        DefFieldType::DT_INVALID,       nullptr }
 };
-DefMap gReanimatorTransformDefMap = { gReanimatorTransformDefFields, sizeof(ReanimatorTransform), };  
+DefMap gReanimatorTransformDefMap = { gReanimatorTransformDefFields, sizeof(ReanimatorTransform), };  //0x69F07C
 
-DefField gReanimatorTrackDefFields[] = {  
+DefField gReanimatorTrackDefFields[] = {  //0x69F148
     { "name",               0x0,        DefFieldType::DT_STRING,        nullptr },
     { "t",                  0x4,        DefFieldType::DT_ARRAY,         &gReanimatorTransformDefMap },
     { "",                   0x0,        DefFieldType::DT_INVALID,       nullptr }
 };
-DefMap gReanimatorTrackDefMap = { gReanimatorTrackDefFields, sizeof(ReanimatorTrack), ReanimatorTrackConstructor };  
+DefMap gReanimatorTrackDefMap = { gReanimatorTrackDefFields, sizeof(ReanimatorTrack), ReanimatorTrackConstructor };  //0x69F178
 
 DefField gReanimatorDefFields[] = {
     { "track",              0x0,        DefFieldType::DT_ARRAY,         &gReanimatorTrackDefMap },
     { "fps",                0x8,        DefFieldType::DT_FLOAT,         nullptr },
     { "",                   0x0,        DefFieldType::DT_INVALID,       nullptr }
-};  
-DefMap gReanimatorDefMap = { gReanimatorDefFields, sizeof(ReanimatorDefinition), ReanimatorDefinitionConstructor };  
+};  //0x69F184
+DefMap gReanimatorDefMap = { gReanimatorDefFields, sizeof(ReanimatorDefinition), ReanimatorDefinitionConstructor };  //0x69F1B4
 
-static DefLoadResPath gDefLoadResPaths[4] = { {"IMAGE_", ""}, {"IMAGE_", "particles\\"}, {"IMAGE_REANIM_", "reanim\\"}, {"IMAGE_REANIM_", "images\\"} };  
+static DefLoadResPath gDefLoadResPaths[4] = { {"IMAGE_", ""}, {"IMAGE_", "particles\\"}, {"IMAGE_REANIM_", "reanim\\"}, {"IMAGE_REANIM_", "images\\"} };  //0x6A1A48
 
+//0x5155A0
 void* ParticleFieldConstructor(void* thePointer)
 {
     if (thePointer)
@@ -154,6 +154,35 @@ void* ParticleFieldConstructor(void* thePointer)
     return thePointer;
 }
 
+
+void SMemR(void*& _Src, void* _Dst, size_t _Size)
+{
+	memcpy(_Dst, _Src, _Size);
+	_Src = (void*)((unsigned int)_Src + _Size);
+}
+
+void SMemRStr(void*& _Src, std::string& theString)
+{
+	size_t aStrLen;
+	SMemR(_Src, &aStrLen, sizeof(aStrLen));
+	theString.resize(aStrLen);
+	SMemR(_Src, (void*)theString.c_str(), aStrLen);
+}
+
+void SMemW(void*& _Dst, const void* _Src, size_t _Size)
+{
+	memcpy(_Dst, _Src, _Size);
+	_Dst = (void*)((unsigned int)_Dst + _Size);
+}
+
+void SMemWStr(void*& _Dst, const std::string& theString)
+{
+	size_t aStrLen = theString.size();
+	SMemW(_Dst, &aStrLen, sizeof(aStrLen));
+	SMemW(_Dst, theString.c_str(), aStrLen);
+}
+
+//0x5155C0
 void* TodEmitterDefinitionConstructor(void* thePointer)
 {
     if (thePointer)
@@ -171,6 +200,7 @@ void* TodEmitterDefinitionConstructor(void* thePointer)
     return thePointer;
 }
 
+//0x515620
 void* TodParticleDefinitionConstructor(void* thePointer)
 {
     if (thePointer)
@@ -194,6 +224,7 @@ void* TrailDefinitionConstructor(void* thePointer)
     return thePointer;
 }
 
+//0x471570
 void* ReanimatorTransformConstructor(void* thePointer)
 {
     if (thePointer)
@@ -213,6 +244,7 @@ void* ReanimatorTransformConstructor(void* thePointer)
     return thePointer;
 }
 
+//0x4715B0
 void* ReanimatorTrackConstructor(void* thePointer)
 {
     if (thePointer)
@@ -224,6 +256,7 @@ void* ReanimatorTrackConstructor(void* thePointer)
     return thePointer;
 }
 
+//0x4715D0
 void* ReanimatorDefinitionConstructor(void* thePointer)
 {
     if (thePointer)
@@ -236,68 +269,6 @@ void* ReanimatorDefinitionConstructor(void* thePointer)
     return thePointer;
 }
 
-unsigned int DefGetSizeString(char** theValue) {
-    return strlen(*theValue) + sizeof(unsigned int);
-}
-
-unsigned int DefinitionGetArraySize(DefinitionArrayDef* theValue, DefMap* theDefMap) {
-    unsigned int aResult = theValue->mArrayCount * theDefMap->mDefSize + sizeof(unsigned int);
-    for (int i = 0; theValue->mArrayCount > i; ++i) {
-        aResult += DefinitionGetDeepSize(theDefMap, (void*)((intptr_t)theValue->mArrayData + i * theDefMap->mDefSize));
-    }
-    return aResult;
-}
-
-unsigned int DefGetSizeFloatTrack(FloatParameterTrack* theValue) {
-    return sizeof(FloatParameterTrackNode) * theValue->mCountNodes + sizeof(unsigned int);
-}
-
-unsigned int DefGetSizeImage(Image** theValue) {
-    std::string aImagePath{};
-    if (*theValue)
-        TodFindImagePath(*theValue, &aImagePath);
-    return aImagePath.length() + sizeof(unsigned int);
-}
-
-unsigned int DefGetSizeFont(Font** theValue) {
-    std::string aFontPath{};
-    if (*theValue)
-        TodFindFontPath(*theValue, &aFontPath);
-    return aFontPath.length() + sizeof(unsigned int);
-}
-
-unsigned int DefinitionGetDeepSize(DefMap* theDefMap, void* theDefinition) {
-    unsigned int aResult = 0;
-    for (DefField* aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++) {
-        void* aDest = (void*)((intptr_t)theDefinition + aField->mFieldOffset);
-        switch (aField->mFieldType) {
-        case DefFieldType::DT_STRING:
-            aResult += DefGetSizeString((char**)aDest);
-            break;
-        case DefFieldType::DT_ARRAY:
-            aResult += DefinitionGetArraySize((DefinitionArrayDef*)aDest, (DefMap*)aField->mExtraData);
-            break;
-        case DefFieldType::DT_TRACK_FLOAT:
-            aResult += DefGetSizeFloatTrack((FloatParameterTrack*)aDest);
-            break;
-        case DefFieldType::DT_IMAGE:
-            aResult += DefGetSizeImage((Image**)aDest);
-            break;
-        case DefFieldType::DT_FONT:
-            aResult += DefGetSizeFont((Font**)aDest);
-            break;
-        default:
-            continue;
-        }
-    }
-
-    return aResult;
-}
-
-unsigned int DefinitionGetSize(DefMap* theDefMap, void* theDefinition) {
-    return theDefMap->mDefSize + DefinitionGetDeepSize(theDefMap, theDefinition);
-}
-
 void* DefinitionAlloc(int theSize)
 {
     void* aPtr = operator new[](theSize);
@@ -306,14 +277,17 @@ void* DefinitionAlloc(int theSize)
     return aPtr;
 }
 
+//0x443BE0
 bool DefinitionLoadImage(Image** theImage, const PopString& theName)
 {
+    // 当贴图文件路径不存在时，无须获取贴图
     if (theName.size() == 0)
     {
         *theImage = nullptr;
         return true;
     }
 
+    // 尝试借助资源管理器，从 XML 中加载贴图
     Image* anImage = (Image*)gAppBase->mResourceManager->LoadImage(theName);
     if (anImage)
     {
@@ -321,6 +295,7 @@ bool DefinitionLoadImage(Image** theImage, const PopString& theName)
         return true;
     }
 
+    // 从可能的贴图路径中手动加载贴图
     for (const DefLoadResPath& aLoadResPath : gDefLoadResPaths)
     {
         int aNameLen = theName.size();
@@ -342,6 +317,7 @@ bool DefinitionLoadImage(Image** theImage, const PopString& theName)
     return false;
 }
 
+//0x443F60
 bool DefinitionLoadFont(Font** theFont, const PopString& theName)
 {
     Font* aFont = gAppBase->mResourceManager->LoadFont(theName);
@@ -354,55 +330,30 @@ bool DefinitionLoadXML(const PopString& theFileName, DefMap* theDefMap, void* th
     return DefinitionCompileAndLoad(theFileName, theDefMap, theDefinition);
 }
 
-void SMemR(void*& _Src, void* _Dst, size_t _Size)
-{
-	memcpy(_Dst, _Src, _Size);
-	_Src = (void*)((size_t)_Src + _Size);
-}
-
-void SMemRStr(void*& _Src, std::string& theString)
-{
-	size_t aStrLen;
-	SMemR(_Src, &aStrLen, sizeof(aStrLen));
-	theString.resize(aStrLen);
-	SMemR(_Src, (void*)theString.c_str(), aStrLen);
-}
-
-void SMemW(void*& _Dst, const void* _Src, size_t _Size)
-{
-	memcpy(_Dst, _Src, _Size);
-	_Dst = (void*)((uintptr_t)_Dst + _Size);
-}
-
-void SMemWStr(void*& _Dst, const std::string& theString)
-{
-	size_t aStrLen = theString.size();
-	SMemW(_Dst, &aStrLen, sizeof(aStrLen));
-	SMemW(_Dst, theString.c_str(), aStrLen);
-}
-
+//0x444020
 bool DefReadFromCacheArray(void*& theReadPtr, DefinitionArrayDef* theArray, DefMap* theDefMap)
 {
     int aDefSize;
-    SMemR(theReadPtr, &aDefSize, sizeof(int));  
-    if (aDefSize != theDefMap->mDefSize)  
+    SMemR(theReadPtr, &aDefSize, sizeof(int));  // 先读取一个整数表示 theDefMap 描述的定义结构类的大小
+    if (aDefSize != theDefMap->mDefSize)  // 比较其与当前给出的定义结构图声明的大小是否一致
     {
         TodTrace("cache has old def: array size");
         return false;
     }
-    if (theArray->mArrayCount == 0)  
+    if (theArray->mArrayCount == 0)  // 如果类中没有实例，则无需读取
         return true;
 
     int aArraySize = aDefSize * theArray->mArrayCount;
-    void* pData = DefinitionAlloc(aArraySize);  
+    void* pData = DefinitionAlloc(aArraySize);  // 申请内存并初始化填充为 0
     theArray->mArrayData = pData;
-    SMemR(theReadPtr, pData, aArraySize);  
+    SMemR(theReadPtr, pData, aArraySize);  // 仍然是粗略读取全部数据，然后再根据 theDefMap 的结构字段数组修复指针
     for (int i = 0; i < theArray->mArrayCount; i++)
-        if (!DefMapReadFromCache(theReadPtr, theDefMap, (void*)((int)pData + theDefMap->mDefSize * i)))  
+        if (!DefMapReadFromCache(theReadPtr, theDefMap, (void*)((int)pData + theDefMap->mDefSize * i)))  // 最后一个参数表示 pData[i]
             return false;
     return true;
 }
 
+//0x4440B0
 bool DefReadFromCacheFloatTrack(void*& theReadPtr, FloatParameterTrack* theTrack)
 {
     int& aCountNodes = theTrack->mCountNodes;
@@ -417,6 +368,7 @@ bool DefReadFromCacheFloatTrack(void*& theReadPtr, FloatParameterTrack* theTrack
     return true;
 }
 
+//0x444110
 bool DefReadFromCacheString(void*& theReadPtr, char** theString)
 {
     int aLen;
@@ -434,36 +386,40 @@ bool DefReadFromCacheString(void*& theReadPtr, char** theString)
     return true;
 }
 
+//0x444180
 bool DefReadFromCacheImage(void*& theReadPtr, Image** theImage)
 {
     int aLen;
-    SMemR(theReadPtr, &aLen, sizeof(int));  
-    char* aImageName = (char*)_alloca(aLen + 1);  
-    SMemR(theReadPtr, aImageName, aLen);  
+    SMemR(theReadPtr, &aLen, sizeof(int));  // 读取贴图标签字符数组的长度
+    char* aImageName = (char*)_alloca(aLen + 1);  // 在栈上分配贴图标签字符数组的内存空间
+    SMemR(theReadPtr, aImageName, aLen);  // 读取贴图标签字符数组
     aImageName[aLen] = '\0';
 
     *theImage = nullptr;
     return aImageName[0] == '\0' || DefinitionLoadImage(theImage, aImageName);
 }
 
+//0x444220
 bool DefReadFromCacheFont(void*& theReadPtr, Font** theFont)
 {
     int aLen;
-    SMemR(theReadPtr, &aLen, sizeof(int));  
-    char* aFontName = (char*)_alloca(aLen + 1);  
-    SMemR(theReadPtr, aFontName, aLen);  
+    SMemR(theReadPtr, &aLen, sizeof(int));  // 读取字体标签字符数组的长度
+    char* aFontName = (char*)_alloca(aLen + 1);  // 在栈上分配字体标签字符数组的内存空间
+    SMemR(theReadPtr, aFontName, aLen);  // 读取字体标签字符数组
     aFontName[aLen] = '\0';
 
     *theFont = nullptr;
     return aFontName[0] == '\0' || DefinitionLoadFont(theFont, aFontName);
 }
 
+//0x4442C0
 bool DefMapReadFromCache(void*& theReadPtr, DefMap* theDefMap, void* theDefinition)
 {
+    // 分别确认每一个成员变量，并修复其中的指针类型和标志类型的变量
     for (DefField* aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++)
     {
         bool aSucceed = true;
-        void* aDest = (void*)((int)theDefinition + aField->mFieldOffset);  
+        void* aDest = (void*)((int)theDefinition + aField->mFieldOffset);  // 指向该成员变量的指针
         switch (aField->mFieldType)
         {
         case DefFieldType::DT_STRING:
@@ -489,21 +445,19 @@ bool DefMapReadFromCache(void*& theReadPtr, DefMap* theDefMap, void* theDefiniti
     return true;
 }
 
+//0x444380
 uint DefinitionCalcHashSymbolMap(int aSchemaHash, DefSymbol* theSymbolMap)
 {
     while (theSymbolMap->mSymbolName != nullptr)
     {
         aSchemaHash = crc32(aSchemaHash, (const Bytef*)theSymbolMap->mSymbolName, strlen(theSymbolMap->mSymbolName));
-#ifndef _WIN64
         aSchemaHash = crc32(aSchemaHash, (const Bytef*)&theSymbolMap->mSymbolValue, sizeof(int));
-#else
-        aSchemaHash = crc32(aSchemaHash, (const Bytef*)&theSymbolMap->mSymbolValue, sizeof(uintptr_t));
-#endif
         theSymbolMap++;
     }
     return aSchemaHash;
 }
 
+//0x4443D0
 uint DefinitionCalcHashDefMap(int aSchemaHash, DefMap* theDefMap, TodList<DefMap*>& theProgressMaps)
 {
     for (TodListNode<DefMap*>* aNode = theProgressMaps.mHead; aNode != nullptr; aNode = aNode->mNext)
@@ -511,20 +465,11 @@ uint DefinitionCalcHashDefMap(int aSchemaHash, DefMap* theDefMap, TodList<DefMap
             return aSchemaHash;
     theProgressMaps.AddTail(theDefMap);
 
-
-#ifndef _WIN64
     aSchemaHash = crc32(aSchemaHash, (Bytef*)&theDefMap->mDefSize, sizeof(int));
-#else
-    aSchemaHash = crc32(aSchemaHash, (Bytef*)&theDefMap->mDefSize, sizeof(int64));
-#endif
     for (DefField* aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++)
     {
         aSchemaHash = crc32(aSchemaHash, (Bytef*)&aField->mFieldType, sizeof(DefFieldType));
-#ifndef _WIN64
         aSchemaHash = crc32(aSchemaHash, (Bytef*)&aField->mFieldOffset, sizeof(int));
-#else
-        aSchemaHash = crc32(aSchemaHash, (Bytef*)&aField->mFieldOffset, sizeof(uintptr_t));
-#endif
         switch (aField->mFieldType)
         {
         case DefFieldType::DT_ENUM:
@@ -539,6 +484,7 @@ uint DefinitionCalcHashDefMap(int aSchemaHash, DefMap* theDefMap, TodList<DefMap
     return aSchemaHash;
 }
 
+//0x444490
 uint DefinitionCalcHash(DefMap* theDefMap)
 {
     TodList<DefMap*> aProgressMaps;
@@ -547,34 +493,34 @@ uint DefinitionCalcHash(DefMap* theDefMap)
     return aResult;
 }
 
+//0x444500 : UnCompress(&theUncompressedSize, theCompressedBufferSize, esi = *theCompressedBuffer)
 void* DefinitionUncompressCompiledBuffer(void* theCompressedBuffer, size_t theCompressedBufferSize, size_t& theUncompressedSize, const PopString& theCompiledFilePath)
 {
-    auto sz=theCompressedBufferSize;
+    // theCompressedBuffer 的前两个四字节存有特殊数据，此处检测其长度是否足够 8 字节（即 2 个四字节）
     if (theCompressedBufferSize < 8)
     {
         TodTrace("Compile def too small", theCompiledFilePath.c_str());
         return nullptr;
     }
+    // 将 theCompressedBuffer 的前两个四字节视为一个 CompressedDefinitionHeader
     CompressedDefinitionHeader* aHeader = (CompressedDefinitionHeader*)theCompressedBuffer;
     if (aHeader->mCookie != 0xDEADFED4L)
     {
         TodTrace("Compiled fire cookie wrong: %s\n", theCompiledFilePath.c_str());
         return nullptr;
     }
+    
     Bytef* aUncompressedBuffer = (Bytef*)DefinitionAlloc(aHeader->mUncompressedSize);
-    theCompressedBufferSize=aHeader->mUncompressedSize; //my addition
-#ifndef _WIN64
-    Bytef* aSrc = (Bytef*)((int)theCompressedBuffer + sizeof(CompressedDefinitionHeader));
-#else
-    Bytef *aSrc = (Bytef *)((uintptr_t)theCompressedBuffer + sizeof(CompressedDefinitionHeader));
-#endif
-    int aResult = uncompress(aUncompressedBuffer, (uLongf*)&theCompressedBufferSize, aSrc, sz - sizeof(CompressedDefinitionHeader));
+    Bytef* aSrc = (Bytef*)((int)theCompressedBuffer + sizeof(CompressedDefinitionHeader));  // 实际解压数据从第 3 个四字节开始
+    unsigned long aUncompressedSizeResult;  // 用作出参的未压缩数据实际长度
+    int aResult = uncompress(aUncompressedBuffer, &aUncompressedSizeResult, aSrc, theCompressedBufferSize - sizeof(CompressedDefinitionHeader));
     TOD_ASSERT(aResult == Z_OK);
-    TOD_ASSERT(theCompressedBufferSize == aHeader->mUncompressedSize);
+    TOD_ASSERT(aUncompressedSizeResult == aHeader->mUncompressedSize);
     theUncompressedSize = aHeader->mUncompressedSize;
     return aUncompressedBuffer;
 }
 
+//0x444560 : (void* def, *defMap, eax = string& compiledFilePath)  //esp -= 8
 bool DefinitionReadCompiledFile(const PopString& theCompiledFilePath, DefMap* theDefMap, void* theDefinition)
 {
     PerfTimer aTimer;
@@ -582,14 +528,14 @@ bool DefinitionReadCompiledFile(const PopString& theCompiledFilePath, DefMap* th
     PFILE* pFile = p_fopen(theCompiledFilePath.c_str(), "rb");
     if (pFile)
     {
-        p_fseek(pFile, 0, 2);  // Move the pointer to the read location to the end of the file
-        size_t aCompressedSize = p_ftell(pFile);  // The offset obtained at this time is the size of the entire file
-        p_fseek(pFile, 0, 0);  // Then move the pointer to the read position back to the beginning of the file
+        p_fseek(pFile, 0, 2);  // 将读取位置的指针移动至文件末尾
+        size_t aCompressedSize = p_ftell(pFile);  // 此时获取到的偏移量即为整个文件的大小
+        p_fseek(pFile, 0, 0);  // 再把读取位置的指针移回文件开头
         void* aCompressedBuffer = DefinitionAlloc(aCompressedSize);
-        // Read the file, and determine whether the actual read size is the complete file size, if it is not equal, it is determined that the read failed
+        // 读取文件，并判断实际读取的大小是否为完整的文件大小，若不等则判断为读取失败
         bool aReadCompressedFailed = p_fread(aCompressedBuffer, sizeof(char), aCompressedSize, pFile) != aCompressedSize;
-        p_fclose(pFile);  // Close the resource file stream and free up the memory occupied by pFile
-        if (aReadCompressedFailed)  // Determine whether the reading is successful
+        p_fclose(pFile);  // 关闭资源文件流并释放 pFile 占用的内存
+        if (aReadCompressedFailed)  // 判断是否读取成功
         {
             TodTrace("Failed to read compiled file: %s\n", theCompiledFilePath.c_str());
             delete[] aCompressedBuffer;
@@ -601,36 +547,27 @@ bool DefinitionReadCompiledFile(const PopString& theCompiledFilePath, DefMap* th
             delete[] aCompressedBuffer;
             if (aUncompressedBuffer)
             {
-                uint aDefHash = DefinitionCalcHash(theDefMap);  // Calculate the CRC check value, which will be used to detect the integrity of the data
-                if (aUncompressedSize < theDefMap->mDefSize + sizeof(uint))  // Detect whether the length of the decompressed data is sufficient for the length of "define data + a check value to record data"
+                uint aDefHash = DefinitionCalcHash(theDefMap);  // 计算 CRC 校验值，后将用于检测数据的完整性
+                if (aUncompressedSize < theDefMap->mDefSize + sizeof(uint))  // 检测解压数据的长度是否足够“定义数据 + 一个校验值记录数据”的长度
                     TodTrace("Compiled file size too small: %s\n", theCompiledFilePath.c_str());
                 else
                 {
-                    // A pointer to copy a copy of the decompressed data is used to move when reading, and the original pointer will be used to calculate the size of the read area and delete[] operations in the future.
+                    // 复制一份解压数据的指针用于读取时移动，原指针后续要用于计算读取区域大小及 delete[] 操作
                     void* aBufferPtr = aUncompressedBuffer;
-#ifndef _WIN64
                     uint aCashHash;
-                    SMemR(aBufferPtr, &aCashHash, sizeof(uint));  //Read the CRC check value of the record
-#else
-                    uintptr_t aCashHash;
-                    SMemR(aBufferPtr, &aCashHash, sizeof(uintptr_t));  //Read the CRC check value of the record
-#endif
-                    if (aCashHash != aDefHash)  // Determine whether the check value is consistent, if it is inconsistent, the data is wrong
+                    SMemR(aBufferPtr, &aCashHash, sizeof(uint));  // 读取记录的 CRC 校验值
+                    if (aCashHash != aDefHash)  // 判断校验值是否一致，若不一致则说明数据发生错误
                         TodTrace("Compiled file schema wrong: %s\n", theCompiledFilePath.c_str());
                     else
                     {
-                        // ☆ Officially started reading definition data ☆
-                        // Roughly read the definition data of the original type of theDefinition for the first time, and gulp all the recorded data into theDefinition.
-                        // At this time, all the data of theDefinition's original non-pointer type will be read correctly, but the variables of its pointer type will be read and assigned as wild pointers.
-                        // / The problem of these wild pointers will be fixed in DefMapReadFromCache() with the help of the corresponding DEFIELD's MEXTRDATA in the future
+                        // ☆ 正式开始读取定义数据 ☆
+                        // 初次粗略读取 theDefinition 原类型的定义数据，囫囵吞枣地将所有记录的数据全部读入到 theDefinition 中
+                        // 此时 theDefinition 原本的非指针类型的数据将全部被正确读取，但其指针类型的变量会被读取并赋值为野指针
+                        // 这些野指针的问题后续将会在 DefMapReadFromCache() 中借助相应 DefField 的 mExtraData 进行修复
                         SMemR(aBufferPtr, theDefinition, theDefMap->mDefSize);
-                        // Repair the wild pointer and flag data, and save the result of whether it is successful, and use it as the return value later
+                        // 修复野指针及标志型数据，并保存是否成功的结果，后续作为返回值
                         bool aResult = DefMapReadFromCache(aBufferPtr, theDefMap, theDefinition);
-#ifndef _WIN64
                         size_t aReadMemSize = (uint)aBufferPtr - (uint)aUncompressedBuffer;
-#else
-                        size_t aReadMemSize = (uintptr_t)aBufferPtr - (uintptr_t)aUncompressedBuffer;
-#endif
                         delete[] aUncompressedBuffer;
                         if (aResult && aReadMemSize != aUncompressedSize)
                             TodTrace("Compiled file wrong size: %s\n", theCompiledFilePath.c_str());
@@ -644,6 +581,7 @@ bool DefinitionReadCompiledFile(const PopString& theCompiledFilePath, DefMap* th
     return false;
 }
 
+//0x444770
 PopString DefinitionGetCompiledFilePathFromXMLFilePath(const PopString& theXMLFilePath)
 {
     return "compiled\\" + theXMLFilePath + ".compiled";
@@ -652,7 +590,7 @@ PopString DefinitionGetCompiledFilePathFromXMLFilePath(const PopString& theXMLFi
 bool IsFileInPakFile(const PopString& theFilePath)
 {
     PFILE* pFile = p_fopen(theFilePath.c_str(), "rb");
-    bool aIsInPak = pFile && !pFile->mFP;  
+    bool aIsInPak = pFile && !pFile->mFP;  // 通过 mPakRecordMap.find 找到并打开的文件，其 mFP 为空指针（因为不是从实际文件中打开的）
     if (pFile)
     {
         p_fclose(pFile);
@@ -675,7 +613,7 @@ bool DefinitionIsCompiled(const PopString& theXMLFilePath)
     if (!GetFileAttributesEx(theXMLFilePath.c_str(), _GET_FILEEX_INFO_LEVELS::GetFileExInfoStandard, &lpFileData))
     {
         TodTrace("Can't file source file to compile '%s'", theXMLFilePath);
-        return true;
+        return false;
     }
     else
         return aSucceed && CompareFileTime(&aCompiledFileTime, &lpFileData.ftLastWriteTime) == 1;
@@ -683,14 +621,10 @@ bool DefinitionIsCompiled(const PopString& theXMLFilePath)
 
 void DefinitionFillWithDefaults(DefMap* theDefMap, void* theDefinition)
 {
-    memset(theDefinition, NULL, theDefMap->mDefSize);  
-    for (DefField* aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++)  
+    memset(theDefinition, NULL, theDefMap->mDefSize);  // 将 theDefinition 初始化填充为 0
+    for (DefField* aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++)  // 遍历 theDefinition 的每一个成员变量
         if (aField->mFieldType == DefFieldType::DT_STRING)
-#ifndef _WIN64
-            *(char**)((uint)theDefinition + aField->mFieldOffset) = (char*)"";  
-#else
-            *(char**)((uintptr_t)theDefinition + aField->mFieldOffset) = (char*)"";
-#endif
+            *(char**)((uint)theDefinition + aField->mFieldOffset) = (char*)"";  // 将所有 char* 类型的成员变量赋值为空字符数组的指针
 }
 
 void DefinitionXmlError(XMLParser* theXmlParser, const char* theFormat, ...)
@@ -708,27 +642,27 @@ void DefinitionXmlError(XMLParser* theXmlParser, const char* theFormat, ...)
 bool DefinitionReadXMLString(XMLParser* theXmlParser, PopString& theValue)
 {
     PopLib::XMLElement aXMLElement;
-    if (!theXmlParser->NextElement(&aXMLElement))  
+    if (!theXmlParser->NextElement(&aXMLElement))  // 读取下一个 XML 元素
     {
         DefinitionXmlError(theXmlParser, "Missing element value");
         return false;
     }
-    if (aXMLElement.mType == PopLib::XMLElement::TYPE_END)  
+    if (aXMLElement.mType == PopLib::XMLElement::TYPE_END)  // 读取到结束标签则结束处理
         return true;
-    else if (aXMLElement.mType != PopLib::XMLElement::TYPE_ELEMENT)  
+    else if (aXMLElement.mType != PopLib::XMLElement::TYPE_ELEMENT)  // 除结束标签外，正常情况下，此处读取到的应是定义的正片内容
     {
         DefinitionXmlError(theXmlParser, "unknown element type");
         return false;
     }
 
-    theValue = aXMLElement.mValue;  
+    theValue = aXMLElement.mValue;  // ☆ 赋值出参
 
-    if (!theXmlParser->NextElement(&aXMLElement))  
+    if (!theXmlParser->NextElement(&aXMLElement))  // 继续读取下一个 XML 元素
     {
         DefinitionXmlError(theXmlParser, "Can't read element end");
         return false;
     }
-    if (aXMLElement.mType != PopLib::XMLElement::TYPE_END)  
+    if (aXMLElement.mType != PopLib::XMLElement::TYPE_END)  // 正常情况下，此处读取到的应是结束标签
     {
         DefinitionXmlError(theXmlParser, "Missing element end");
         return false;
@@ -831,12 +765,13 @@ bool DefinitionReadArrayField(XMLParser* theXmlParser, DefinitionArrayDef* theAr
     }
     else
     {
-        if (theArray->mArrayCount >= 1 && (theArray->mArrayCount == 1 || (theArray->mArrayCount & (theArray->mArrayCount - 1) == 0)))
+        // 当 theArray 中已存在元素，且元素的个数为 2 的整数次幂时
+        if (theArray->mArrayCount >= 1 && (theArray->mArrayCount == 1 || ((theArray->mArrayCount & (theArray->mArrayCount - 1)) == 0)))
         {
             void* anOldData = theArray->mArrayData;
             theArray->mArrayData = DefinitionAlloc(2 * theArray->mArrayCount * aDefMap->mDefSize);
             memcpy(theArray->mArrayData, anOldData, theArray->mArrayCount * aDefMap->mDefSize);
-            delete[] anOldData;
+            delete[] (char *)anOldData;
         }
         theArray->mArrayCount++;
     }
@@ -925,12 +860,12 @@ bool DefinitionReadField(XMLParser* theXmlParser, DefMap* theDefMap, void* theDe
         return false;
 
     PopLib::XMLElement aXMLElement;
-    if (!theXmlParser->NextElement(&aXMLElement) || aXMLElement.mType == PopLib::XMLElement::TYPE_END)  
+    if (!theXmlParser->NextElement(&aXMLElement) || aXMLElement.mType == PopLib::XMLElement::TYPE_END)  // 读取下一个 XML 元素
     {
-        *theDone = true;  
+        *theDone = true;  // 没有下一个元素则表示读取完成
         return true;
     }
-    if (aXMLElement.mType != PopLib::XMLElement::TYPE_START)  
+    if (aXMLElement.mType != PopLib::XMLElement::TYPE_START)  // 正常情况下，此处读取到的应是开始标签，而其他内容在后续的相应函数中读取
     {
         DefinitionXmlError(theXmlParser, "Missing element start");
         return false;
@@ -942,7 +877,7 @@ bool DefinitionReadField(XMLParser* theXmlParser, DefMap* theDefMap, void* theDe
         if (aField->mFieldType == DefFieldType::DT_FLAGS && DefinitionReadFlagField(theXmlParser, aXMLElement.mValue, nullptr, (DefSymbol*)aField->mExtraData))
             return true;
         
-        if (stricmp(aXMLElement.mValue.c_str(), aField->mFieldName) == 0)  
+        if (stricmp(aXMLElement.mValue.c_str(), aField->mFieldName) == 0)  // 判断 aXMLElement 定义的是否为该成员变量
         {
             bool aSuccess;
             switch (aField->mFieldType)
@@ -985,16 +920,16 @@ bool DefinitionReadField(XMLParser* theXmlParser, DefMap* theDefMap, void* theDe
             return false;
         }
     }
-    DefinitionXmlError(theXmlParser, "Ignoring unknown element '%s'", aXMLElement.mValue.c_str());  
+    DefinitionXmlError(theXmlParser, "Ignoring unknown element '%s'", aXMLElement.mValue.c_str());  // aXMLElement 未定义任何成员变量时
     return false;
 }
 
 bool DefinitionLoadMap(XMLParser* theXmlParser, DefMap* theDefMap, void* theDefinition)
 {
     if (theDefMap->mConstructorFunc)
-        theDefMap->mConstructorFunc(theDefinition);  
+        theDefMap->mConstructorFunc(theDefinition);  // 利用构造函数构造 theDefinition
     else
-        DefinitionFillWithDefaults(theDefMap, theDefinition);  
+        DefinitionFillWithDefaults(theDefMap, theDefinition);  // 以默认值填充 theDefinition
 
     bool aDone = false;
     while (!aDone)
@@ -1003,120 +938,28 @@ bool DefinitionLoadMap(XMLParser* theXmlParser, DefMap* theDefMap, void* theDefi
     return true;
 }
 
-void DefWriteToCacheFloatTrack(void*& theWritePtr, FloatParameterTrack* theValue) {
-    SMemW(theWritePtr, &theValue->mCountNodes, sizeof(unsigned int));
-    if (theValue->mCountNodes > 0)
-        SMemW(theWritePtr, theValue->mNodes, theValue->mCountNodes * sizeof(FloatParameterTrackNode));
-}
-
-void DefWriteToCacheImage(void*& theWritePtr, Image** theValue) {
-    std::string aImageName{};
-    if (*theValue)
-        TodFindImagePath(*theValue, &aImageName);
-
-    unsigned int aImageSize = aImageName.length();
-    SMemW(theWritePtr, &aImageSize, sizeof(unsigned int));
-    if (aImageSize > 0)
-        SMemW(theWritePtr, aImageName.c_str(), aImageSize);
-}
-
-void DefWriteToCacheFont(void*& theWritePtr, Font** theValue) {
-    std::string aFontName{};
-    if (*theValue) {
-        TodFindFontPath(*theValue, &aFontName);
-    }
-
-    unsigned int aFontSize = aFontName.length();
-    SMemW(theWritePtr, &aFontSize, sizeof(unsigned int));
-    if (aFontSize > 0)
-        SMemW(theWritePtr, aFontName.c_str(), aFontSize);
-}
-
-void DefWriteToCacheString(void*& theWritePtr, char** theValue) {
-    unsigned int aStringSize = strlen(*theValue);
-    SMemW(theWritePtr, &aStringSize, sizeof(unsigned int));
-    if (aStringSize > 0)
-        SMemW(theWritePtr, *theValue, aStringSize);
-}
-
-void DefWriteToCacheArray(void*& theWritePtr, DefinitionArrayDef* theValue, DefMap* theDefMap) {
-	SMemW(theWritePtr, &theDefMap->mDefSize, sizeof(unsigned int));
-	SMemW(theWritePtr, theValue->mArrayData, theDefMap->mDefSize * theValue->mArrayCount);
-	for (int i = 0; i < theValue->mArrayCount; ++i)
-		DefMapWriteToCache(theWritePtr, theDefMap, (void*)((intptr_t)theValue->mArrayData + i * theDefMap->mDefSize));
-}
-
-void DefMapWriteToCache(void*& theWritePtr, DefMap* theDefMap, void* theDefinition) {
-	for (DefField* aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++) {
-		void* aDest = (void*)((intptr_t)theDefinition + aField->mFieldOffset);
-		switch (aField->mFieldType) {
-		case DefFieldType::DT_STRING:
-			DefWriteToCacheString(theWritePtr, (char**)aDest);
-			break;
-		case DefFieldType::DT_ARRAY:
-			DefWriteToCacheArray(theWritePtr, (DefinitionArrayDef*)aDest, (DefMap*)aField->mExtraData);
-			break;
-		case DefFieldType::DT_TRACK_FLOAT:
-			DefWriteToCacheFloatTrack(theWritePtr, (FloatParameterTrack*)aDest);
-			break;
-		case DefFieldType::DT_IMAGE:
-			DefWriteToCacheImage(theWritePtr, (Image**)aDest);
-			break;
-		case DefFieldType::DT_FONT:
-			DefWriteToCacheFont(theWritePtr, (Font**)aDest);
-			break;
-		default:
-			break;
-		}
-	}
-}
-
-void* DefinitionCompressCompiledBuffer(void* theBuffer, unsigned int theBufferSize, unsigned int* theResultSize) {
-    uLongf aCompressedSize = compressBound(theBufferSize);
-    auto aCompressedBuffer = (CompressedDefinitionHeader*)DefinitionAlloc(aCompressedSize + sizeof(CompressedDefinitionHeader));
-    compress((Bytef*)((uintptr_t)aCompressedBuffer + sizeof(CompressedDefinitionHeader)), &aCompressedSize, (Bytef*)theBuffer, theBufferSize);
-    aCompressedBuffer->mCookie = 0xDEADFED4;
-    aCompressedBuffer->mUncompressedSize = theBufferSize;
-    *theResultSize = aCompressedSize + sizeof(CompressedDefinitionHeader);
-    return aCompressedBuffer;
-}
-
 bool DefinitionWriteCompiledFile(const PopString& theCompiledFilePath, DefMap* theDefMap, void* theDefinition)
 {
-    unsigned int aCompressedSize = 0;
-    unsigned int aDefSize = DefinitionGetSize(theDefMap, theDefinition) + sizeof(unsigned int);
-    void* aDefBasePtr = DefinitionAlloc(aDefSize);
-    void* aDef = aDefBasePtr;
-    uint aDefHash = DefinitionCalcHash(theDefMap);
-
-    SMemW(aDef, &aDefHash, sizeof(uint));
-    SMemW(aDef, theDefinition, theDefMap->mDefSize);
-    DefMapWriteToCache(aDef, theDefMap, theDefinition);
-    void* aCompressedDef = DefinitionCompressCompiledBuffer(aDefBasePtr, aDefSize, &aCompressedSize);
-
-    delete[] (uint *)aDefBasePtr; // already compressed, no need to keep this instance alive
-
-    std::string aFilePath = GetFileDir(theCompiledFilePath);
-    MkDir(aFilePath);
-
-    auto aFileStream = fopen(theCompiledFilePath.c_str(), "wb");
-    if (aFileStream) {
-        unsigned int aBytesWritten = fwrite(aCompressedDef, 1u, aCompressedSize, aFileStream);
-
-        delete[] (char *)aCompressedDef;
-
-        fclose(aFileStream);
-        return aBytesWritten == aCompressedSize;
-    }
-
-    delete[] (char *)aCompressedDef;
-    return false;
+    /*
+    ####################################################################################################
+    ####################################################################################################
+    ####################################################################################################
+    ####################################################################################################
+    ####################################################################################################
+    ####################################################################################################
+    ####################################################################################################
+    ####################################################################################################
+    ####################################################################################################
+    ####################################################################################################
+    */
+    return true;
 }
 
 bool DefinitionCompileFile(const PopString theXMLFilePath, const PopString& theCompiledFilePath, DefMap* theDefMap, void* theDefinition)
 {
+    TodTrace("test");
     XMLParser aXMLParser;
-    if (!aXMLParser.OpenFile(theXMLFilePath, "definition"))
+    if (!aXMLParser.OpenFile(theXMLFilePath))
     {
         TodTrace("XML file not found: %s\n", theXMLFilePath.c_str());
         return false;
@@ -1128,10 +971,10 @@ bool DefinitionCompileFile(const PopString theXMLFilePath, const PopString& theC
     return true;
 }
 
+//0x4447F0 : (void* def, *defMap, string& xmlFilePath)  //esp -= 0xC
 bool DefinitionCompileAndLoad(const PopString& theXMLFilePath, DefMap* theDefMap, void* theDefinition)
 {
-    //Changed to compile from in debug to this preprocessor
-#ifdef _COMPILEXML  
+#ifndef _DEBUG  // 内测版执行的内容
 
     TodHesitationTrace("predef");
     PopString aCompiledFilePath = DefinitionGetCompiledFilePathFromXMLFilePath(theXMLFilePath);
@@ -1150,7 +993,7 @@ bool DefinitionCompileAndLoad(const PopString& theXMLFilePath, DefMap* theDefMap
         return aResult;
     }
 
-#else  
+#else  // 原版执行的内容
 
     PopString aCompiledFilePath = DefinitionGetCompiledFilePathFromXMLFilePath(theXMLFilePath);
     if (DefinitionReadCompiledFile(aCompiledFilePath, theDefMap, theDefinition))
@@ -1162,20 +1005,22 @@ bool DefinitionCompileAndLoad(const PopString& theXMLFilePath, DefMap* theDefMap
 #endif
 }
 
+//0x4448E0
 float FloatTrackEvaluate(FloatParameterTrack& theTrack, float theTimeValue, float theInterp)
 {
     if (theTrack.mCountNodes == 0)
         return 0.0f;
 
-    if (theTimeValue < theTrack.mNodes[0].mTime)  
+    if (theTimeValue < theTrack.mNodes[0].mTime)  // 如果当前时间小于第一个节点的开始时间
         return TodCurveEvaluate(theInterp, theTrack.mNodes[0].mLowValue, theTrack.mNodes[0].mHighValue, theTrack.mNodes[0].mDistribution);
 
     for (int i = 1; i < theTrack.mCountNodes; i++)
     {
         FloatParameterTrackNode* aNodeNxt = &theTrack.mNodes[i];
-        if (theTimeValue <= aNodeNxt->mTime)  
+        if (theTimeValue <= aNodeNxt->mTime)  // 寻找首个开始时间大于当前时间的节点
         {
             FloatParameterTrackNode* aNodeCur = &theTrack.mNodes[i - 1];
+            // 计算当前时间在〔当前节点至下一节点〕的过程中的进度
             float aTimeFraction = (theTimeValue - aNodeCur->mTime) / (aNodeNxt->mTime - aNodeCur->mTime);
             float aLeftValue = TodCurveEvaluate(theInterp, aNodeCur->mLowValue, aNodeCur->mHighValue, aNodeCur->mDistribution);
             float aRightValue = TodCurveEvaluate(theInterp, aNodeNxt->mLowValue, aNodeNxt->mHighValue, aNodeNxt->mDistribution);
@@ -1183,15 +1028,16 @@ float FloatTrackEvaluate(FloatParameterTrack& theTrack, float theTimeValue, floa
         }
     }
 
-    FloatParameterTrackNode* aLastNode = &theTrack.mNodes[theTrack.mCountNodes - 1];  
+    FloatParameterTrackNode* aLastNode = &theTrack.mNodes[theTrack.mCountNodes - 1];  // 如果当前时间大于最后一个节点的开始时间
     return TodCurveEvaluate(theInterp, aLastNode->mLowValue, aLastNode->mHighValue, aLastNode->mDistribution);
 }
 
+//0x4449F0
 void FloatTrackSetDefault(FloatParameterTrack& theTrack, float theValue)
 {
-    if (theTrack.mNodes == nullptr && theValue != 0.0f)  
+    if (theTrack.mNodes == nullptr && theValue != 0.0f)  // 确保该参数轨道无节点（未被赋值过）且给定的默认值不为 0
     {
-        theTrack.mCountNodes = 1;  
+        theTrack.mCountNodes = 1;  // 默认参数轨道有且仅有 1 个节点
         FloatParameterTrackNode* aNode = (FloatParameterTrackNode*)DefinitionAlloc(sizeof(FloatParameterTrackNode));
         theTrack.mNodes = aNode;
         aNode->mTime = 0.0f;
@@ -1209,32 +1055,37 @@ bool FloatTrackIsSet(const FloatParameterTrack& theTrack)
 
 bool FloatTrackIsConstantZero(FloatParameterTrack& theTrack)
 {
+    // 当轨道无节点，或仅存在一个节点且该节点的最大、最小值均为 0 时，认为该轨道上的值恒为零
     return theTrack.mCountNodes == 0 || (theTrack.mCountNodes == 1 && theTrack.mNodes[0].mLowValue == 0.0f && theTrack.mNodes[0].mHighValue == 0.0f);
 }
 
+//0x5167F0
 float FloatTrackEvaluateFromLastTime(FloatParameterTrack& theTrack, float theTimeValue, float theInterp)
 {
     return theTimeValue < 0.0f ? 0.0f : FloatTrackEvaluate(theTrack, theTimeValue, theInterp);
 }
 
+//0x444A50
 void DefinitionFreeArrayField(DefinitionArrayDef* theArray, DefMap* theDefMap)
 {
     for (int i = 0; i < theArray->mArrayCount; i++)
-        DefinitionFreeMap(theDefMap, (void*)((int)theArray->mArrayData + theDefMap->mDefSize * i));  
+        DefinitionFreeMap(theDefMap, (void*)((int)theArray->mArrayData + theDefMap->mDefSize * i));  // 最后一个参数表示 pData[i]
     delete[] theArray->mArrayData;
     theArray->mArrayData = nullptr;
 }
 
+//0x444A90
 void DefinitionFreeMap(DefMap* theDefMap, void* theDefinition)
 {
+    // 根据 theDefMap 遍历 theDefinition 的每个成员变量
     for (DefField* aField = theDefMap->mMapFields; *aField->mFieldName != '\0'; aField++)
     {
-        void* aVar = (void*)((int)theDefinition + aField->mFieldOffset);  
+        void* aVar = (void*)((int)theDefinition + aField->mFieldOffset);  // 指向该成员变量的指针
         switch (aField->mFieldType)
         {
         case DefFieldType::DT_STRING:
             if (**(char**)aVar != '\0')
-                delete[] *(char**)aVar;  
+                delete[] *(char**)aVar;  // 释放字符数组
             *(char**)aVar = nullptr;
             break;
         case DefFieldType::DT_ARRAY:
@@ -1242,7 +1093,7 @@ void DefinitionFreeMap(DefMap* theDefMap, void* theDefinition)
             break;
         case DefFieldType::DT_TRACK_FLOAT:
             if (((FloatParameterTrack*)aVar)->mCountNodes != 0)
-                delete[]((FloatParameterTrack*)aVar)->mNodes;  
+                delete[]((FloatParameterTrack*)aVar)->mNodes;  // 释放浮点参数轨道的节点
             ((FloatParameterTrack*)aVar)->mNodes = nullptr;
             break;
         }

@@ -1,7 +1,7 @@
 #ifndef __DATASYNC_H__
 #define __DATASYNC_H__
 
-#include <Poplib/common.hpp>
+#include <common.hpp>
 
 class DataReader
 {

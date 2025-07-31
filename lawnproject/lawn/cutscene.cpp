@@ -23,8 +23,8 @@
 #include <todlib/reanimation/reanimator.hpp>
 #include <todlib/effects/todparticle.hpp>
 #include <todlib/todstringfile.hpp>
-#include <Poplib/debug/perftimer.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <debug/perftimer.hpp>
+#include <widget/widgetmanager.hpp>
 
 static const int	TimePanRightStart				= 1500;
 static const int	TimePanRightEnd					= 3500;		//[0x6A4FFC]

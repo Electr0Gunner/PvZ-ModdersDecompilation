@@ -1,7 +1,7 @@
 #include "todlib/todfoley.hpp"
 #include <todlib/toddebug.hpp>
 #include "todlib/todcommon.hpp"
-#include <PopLib/audio/openalsoundmanager.hpp>
+#include <audio/openalsoundmanager.hpp>
 
 int gFoleyParamArraySize;        //[0x6A9F04]
 FoleyParams* gFoleyParamArray;   //[0x6A9F00]
@@ -280,7 +280,7 @@ void TodFoley::PlayFoleyPitch(FoleyType theFoleyType, float thePitch)
 	if (TestBit(aFoleyParams->mFoleyFlags, FoleyFlags::FOLEYFLAGS_USES_MUSIC_VOLUME))  // 如果定义了使用音乐音量
 		ApplyMusicVolume(aFoleyInstance);  // 将音效的音量调整为与音乐一致
 	bool aIsLooping = TestBit(aFoleyParams->mFoleyFlags, FoleyFlags::FOLEYFLAGS_LOOP);
-	aSoundInstance->Play(aIsLooping, false);  // 正式开始播放音效
+	//aSoundInstance->Play(aIsLooping, false);  // 正式开始播放音效
 }
 
 //0x515240

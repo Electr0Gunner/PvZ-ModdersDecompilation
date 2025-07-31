@@ -15,5 +15,5 @@
 #include "lawn/messagewidget.hpp"
 #include "gameconstants.hpp"
 #include "lawn/widget/GameButton.hpp"
-#include <PopLib/debug/debug.hpp>
-#include <Poplib/graphics/graphics.hpp>
+#include <debug/debug.hpp>
+#include <graphics/graphics.hpp>

@@ -9,7 +9,7 @@
 #include <todlib/reanimation/reanimator.hpp>
 #include <todlib/effects/effectsystem.hpp>
 #include <todlib/todstringfile.hpp>
-#include <Poplib/graphics/imagefont.hpp>
+#include <graphics/imagefont.hpp>
 
 
 //0x456A80

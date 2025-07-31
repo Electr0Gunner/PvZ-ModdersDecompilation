@@ -1,7 +1,7 @@
 #pragma once
 
 #include "constenums.hpp"
-#include <Poplib/graphics/graphics.hpp>
+#include <graphics/graphics.hpp>
 
 using namespace PopLib;
 

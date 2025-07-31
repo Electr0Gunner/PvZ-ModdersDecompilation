@@ -9,8 +9,8 @@
 #include "lawn/widget/newoptionsdialog.hpp"
 #include "constenums.hpp"
 #include <todlib/todfoley.hpp>
-#include <Poplib/widget/slider.hpp>
-#include <Poplib/widget/checkbox.hpp>
+#include <widget/slider.hpp>
+#include <widget/checkbox.hpp>
 #include <todlib/todstringfile.hpp>
 
 using namespace PopLib;

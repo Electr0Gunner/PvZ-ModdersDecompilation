@@ -7,8 +7,8 @@
 #include "TodParticle.hpp"
 #include "effectsystem.hpp"
 #include <gameconstants.hpp>
-#include <PopLib/graphics/sdlimage.hpp>
-#include <PopLib/graphics/sdlinterface.hpp>
+#include <graphics/gpuimage.hpp>
+#include <graphics/renderer.hpp>
 
 EffectSystem* gEffectSystem = nullptr;  //[0x6A9EB8]
 
@@ -395,11 +395,11 @@ void TodTriangleGroup::DrawGroup(Graphics* g)
 			gTodTriangleDrawAdditive = true;
 		TodSandImageIfNeeded(mImage);
 
-		if (SDLImage::Check3D(g->mDestImage))
+		if (MemoryImage::Check3D(g->mDestImage))
 		{
-			SDLImage* anImage = (SDLImage*)g->mDestImage;
+			GPUImage* anImage = (GPUImage*)g->mDestImage;
 			mImage->mDrawn = true;
-			anImage->mInterface->DrawTrianglesTex(mVertArray, mTriangleCount, Color::White, mDrawMode, mImage, 0.0f, 0.0f, g->mLinearBlend);
+			gAppBase->mRenderer->DrawTrianglesTex(mVertArray, mTriangleCount, Color::White, mDrawMode, mImage, 0.0f, 0.0f, g->mLinearBlend);
 		}
 		else
 		{

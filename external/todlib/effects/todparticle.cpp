@@ -3,8 +3,8 @@
 #include "todlib/effects/todparticle.hpp"
 #include "todlib/effects/effectsystem.hpp"
 #include <gameconstants.hpp>
-#include <Poplib/graphics/graphics.hpp>
-#include <PopLib/graphics/sdlinterface.hpp>
+#include <graphics/graphics.hpp>
+#include <graphics/renderer.hpp>
 
 int gParticleDefCount;                      // [0x6A9F08]
 TodParticleDefinition* gParticleDefArray;   // [0x6A9F0C]

@@ -2,7 +2,7 @@
 #define __NEWUSERDIALOG_H__
 
 #include "lawndialog.hpp"
-#include <PopLib/widget/editlistener.hpp>
+#include <widget/editlistener.hpp>
 
 class NewUserDialog : public LawnDialog, public EditListener
 {

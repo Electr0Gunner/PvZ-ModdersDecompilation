@@ -1,7 +1,7 @@
 #ifndef __REANIMATLAS_H__
 #define __REANIMATLAS_H__
 
-#include <PopLib/math/rect.hpp>
+#include <math/rect.hpp>
 using namespace PopLib;
 
 #define MAX_REANIM_IMAGES 64

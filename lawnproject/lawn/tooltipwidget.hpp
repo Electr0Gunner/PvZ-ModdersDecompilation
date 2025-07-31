@@ -1,7 +1,7 @@
 #ifndef __TOOLTIPWIDGET_H__ 
 #define __TOOLTIPWIDGET_H__
 
-#include <PopLib/common.hpp>
+#include <common.hpp>
 namespace PopLib
 {
     class Graphics;

@@ -2,10 +2,10 @@
 #include "lawn/board.hpp"
 #include "lawn/system/playerinfo.hpp"
 #include "lawnapp.hpp"
-#include <PopLib/paklib/pakinterface.hpp>
+#include <paklib/pakinterface.hpp>
 #include <todlib/toddebug.hpp>
 #include <todlib/todcommon.hpp>
-#include <PopLib/audio/bassmusicinterface.hpp>
+#include <audio/bassmusicinterface.hpp>
 
 using namespace PopLib;
 

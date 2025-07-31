@@ -11,7 +11,7 @@
 #include <todlib/todfoley.hpp>
 #include <todlib/reanimation/reanimator.hpp>
 #include <todlib/effects/todparticle.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 using namespace PopLib;
 
@@ -65,7 +65,7 @@ void GridItem::DrawGridItemOverlay(Graphics* g)
 {
     if (mGridItemType == GridItemType::GRIDITEM_STINKY)
     {
-        if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_CHOCOLATE && !mApp->mZenGarden->IsStinkyHighOnChocolate())
+        if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE && !mApp->mZenGarden->IsStinkyHighOnChocolate())
         {
             g->DrawImage(IMAGE_PLANTSPEECHBUBBLE, mPosX + 50.0f, mPosY - 36.0f);
             TodDrawImageScaledF(g, IMAGE_CHOCOLATE, mPosX + 63.0f, mPosY - 28.0f, 0.44f, 0.44f);

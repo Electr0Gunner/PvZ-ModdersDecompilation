@@ -4,8 +4,8 @@
 #include "lawn/widget/challengescreen.hpp"
 #include <todlib/toddebug.hpp>
 #include <todlib/todcommon.hpp>
-#include <Poplib/misc/buffer.hpp>
-#include <Poplib/appbase.hpp>
+#include <misc/buffer.hpp>
+#include <appbase.hpp>
 
 static int gUserVersion = 12;
 

@@ -1,7 +1,7 @@
 #include "lawn/widget/newuserdialog.hpp"
 #include "lawnapp.hpp"
 #include "resources.hpp"
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 //0x45D610
 NewUserDialog::NewUserDialog(LawnApp* theApp, bool isRename) : LawnDialog(

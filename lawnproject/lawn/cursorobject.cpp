@@ -5,7 +5,7 @@
 #include "lawn/cursorobject.hpp"
 #include "resources.hpp"
 #include <todlib/reanimation/reanimator.hpp>
-#include <PopLib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 //0x438640
 CursorObject::CursorObject()
@@ -15,7 +15,7 @@ CursorObject::CursorObject()
     mSeedBankIndex = -1;
     mX = 0;
     mY = 0;
-    mCursorType = CursorType::CURSOR_TYPE_NORMAL;
+    mCursorType = LawnCursorType::CURSOR_TYPE_NORMAL;
     mCoinID = CoinID::COINID_NULL;
     mDuplicatorPlantID = PlantID::PLANTID_NULL;
     mCobCannonPlantID = PlantID::PLANTID_NULL;
@@ -72,11 +72,11 @@ void CursorObject::Draw(Graphics* g)
 {
     switch (mCursorType)
     {
-    case CursorType::CURSOR_TYPE_SHOVEL:
+    case LawnCursorType::CURSOR_TYPE_SHOVEL:
         g->DrawImage(IMAGE_SHOVEL, 10, -30);
         break;
 
-    case CursorType::CURSOR_TYPE_WATERING_CAN:
+    case LawnCursorType::CURSOR_TYPE_WATERING_CAN:
         if (mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_GOLD_WATERINGCAN])
         {
             g->DrawImage(IMAGE_ZEN_GOLDTOOLRETICLE, -62, -37);
@@ -88,35 +88,35 @@ void CursorObject::Draw(Graphics* g)
         }
         break;
 
-    case CursorType::CURSOR_TYPE_FERTILIZER:
+    case LawnCursorType::CURSOR_TYPE_FERTILIZER:
         g->DrawImage(IMAGE_FERTILIZER, -15, 0);
         break;
 
-    case CursorType::CURSOR_TYPE_BUG_SPRAY:
+    case LawnCursorType::CURSOR_TYPE_BUG_SPRAY:
         g->DrawImage(IMAGE_BUG_SPRAY, -9, -1);
         break;
 
-    case CursorType::CURSOR_TYPE_PHONOGRAPH:
+    case LawnCursorType::CURSOR_TYPE_PHONOGRAPH:
         g->DrawImage(IMAGE_PHONOGRAPH, -17, 10);
         break;
 
-    case CursorType::CURSOR_TYPE_CHOCOLATE:
+    case LawnCursorType::CURSOR_TYPE_CHOCOLATE:
         g->DrawImage(IMAGE_CHOCOLATE, -2, -8);
         break;
 
-    case CursorType::CURSOR_TYPE_GLOVE:
+    case LawnCursorType::CURSOR_TYPE_GLOVE:
         g->DrawImage(IMAGE_ZEN_GARDENGLOVE, -17, 15);
         break;
 
-    case CursorType::CURSOR_TYPE_MONEY_SIGN:
+    case LawnCursorType::CURSOR_TYPE_MONEY_SIGN:
         g->DrawImage(IMAGE_ZEN_MONEYSIGN, -17, -10);
         break;
 
-    case CursorType::CURSOR_TYPE_TREE_FOOD:
+    case LawnCursorType::CURSOR_TYPE_TREE_FOOD:
         g->DrawImage(IMAGE_TREEFOOD, -15, 0);
         break;
 
-    case CursorType::CURSOR_TYPE_WHEEELBARROW:
+    case LawnCursorType::CURSOR_TYPE_WHEEELBARROW:
     {
         PottedPlant* aPottedPlant = mApp->mZenGarden->GetPottedPlantInWheelbarrow();
         if (aPottedPlant)
@@ -143,7 +143,7 @@ void CursorObject::Draw(Graphics* g)
         break;
     }
 
-    case CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE:
+    case LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE:
     {
         Plant* aPlant = mBoard->mPlants.DataArrayGet((unsigned int)mGlovePlantID);
         PottedPlant* aPottedPlant = &mApp->mPlayerInfo->mPottedPlant[aPlant->mPottedPlantIndex];
@@ -159,7 +159,7 @@ void CursorObject::Draw(Graphics* g)
         break;
     }
 
-    case CursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW:
+    case LawnCursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW:
     {
         PottedPlant* aPottedPlant = mApp->mZenGarden->GetPottedPlantInWheelbarrow();
         if (mBoard->mBackground == BackgroundType::BACKGROUND_MUSHROOM_GARDEN || mBoard->mBackground == BackgroundType::BACKGROUND_ZOMBIQUARIUM)
@@ -174,9 +174,9 @@ void CursorObject::Draw(Graphics* g)
         break;
     }
 
-    case CursorType::CURSOR_TYPE_PLANT_FROM_BANK:
-    case CursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN:
-    case CursorType::CURSOR_TYPE_PLANT_FROM_DUPLICATOR:
+    case LawnCursorType::CURSOR_TYPE_PLANT_FROM_BANK:
+    case LawnCursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN:
+    case LawnCursorType::CURSOR_TYPE_PLANT_FROM_DUPLICATOR:
     {
         float aOffsetX = -10.0f;
         float aOffsetY = PlantDrawHeightOffset(mBoard, nullptr, mType, -1, -1) - 10.0f;
@@ -195,11 +195,11 @@ void CursorObject::Draw(Graphics* g)
         break;
     }
     
-    case CursorType::CURSOR_TYPE_HAMMER:
+    case LawnCursorType::CURSOR_TYPE_HAMMER:
         mApp->ReanimationGet(mReanimCursorID)->Draw(g);
         break;
 
-    case CursorType::CURSOR_TYPE_COBCANNON_TARGET:
+    case LawnCursorType::CURSOR_TYPE_COBCANNON_TARGET:
     {
         HitResult aHitResult;
         mBoard->MouseHitTest(mBoard->mPrevMouseX, mBoard->mPrevMouseY, &aHitResult);
@@ -246,7 +246,7 @@ void CursorPreview::Update()
         {
             aShow = true;
         }
-        else if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_WHEEELBARROW)
+        else if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_WHEEELBARROW)
         {
             if (mApp->mZenGarden->GetPottedPlantInWheelbarrow() && mBoard->CanPlantAt(mGridX, mGridY, aSeedType) == PlantingReason::PLANTING_OK)
             {
@@ -277,11 +277,11 @@ void CursorPreview::Draw(Graphics* g)
     g->SetColor(Color(255, 255, 255, 100));
 
     PottedPlant* aPottedPlant = nullptr;
-    if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_WHEEELBARROW || mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW)
+    if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_WHEEELBARROW || mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW)
     {
         aPottedPlant = mApp->mZenGarden->GetPottedPlantInWheelbarrow();
     }
-    else if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
+    else if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
     {
         aPottedPlant = &mApp->mPlayerInfo->mPottedPlant[mBoard->mPlants.DataArrayGet((unsigned int)mBoard->mCursorObject->mGlovePlantID)->mPottedPlantIndex];
     }

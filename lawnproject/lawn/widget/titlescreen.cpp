@@ -1,10 +1,10 @@
 #include "lawn/widget/titlescreen.hpp"
-#include <Poplib/widget/hyperlinkwidget.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/hyperlinkwidget.hpp>
+#include <widget/widgetmanager.hpp>
 #include "lawnapp.hpp"
 #include "resources.hpp"
 #include <todlib/todcommon.hpp>
-#include <Poplib/math/matrix.hpp>
+#include <math/matrix.hpp>
 #include <todlib/todstringfile.hpp>
 #include <todlib/effects/effectsystem.hpp>
 #include <todlib/toddebug.hpp>
@@ -41,6 +41,7 @@ TitleScreen::TitleScreen(LawnApp* theApp)
 	mStartButton->mUnderlineSize = 0;
 	mStartButton->mDisabled = true;
 	mStartButton->mVisible = false;
+
 }
 
 //0x48D6B0��0x48D6D0
@@ -56,7 +57,7 @@ void TitleScreen::DrawToPreload(Graphics* g)
 {
 	g->DrawImageF(IMAGE_PLANTSHADOW, 1000.0f, 0.0f);
 }
-
+bool reanimstuff = false;
 //0x48D730
 void TitleScreen::Draw(Graphics* g)
 {
@@ -153,6 +154,16 @@ void TitleScreen::Draw(Graphics* g)
 	int aGrassX = mStartButton->mX;
 	int aGrassY = mStartButton->mY - 17;
 	g->DrawImage(IMAGE_LOADBAR_DIRT, aGrassX, aGrassY + 18);
+
+	if (mLoadingThreadComplete && !reanimstuff)
+	{
+		reanimstuff = true;
+		ReanimatorEnsureDefinitionLoaded(REANIM_ZOMBIE, true);
+
+		Reanimation* aSproutReanim = mApp->AddReanimation(0, 0, 0, REANIM_ZOMBIE);
+		aSproutReanim->mAnimRate = 18.0f;
+		aSproutReanim->mLoopType = ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD;
+	}
 
 	if (mCurBarWidth >= mTotalBarWidth)
 	{

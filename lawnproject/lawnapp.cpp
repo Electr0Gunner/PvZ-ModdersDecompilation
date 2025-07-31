@@ -30,7 +30,7 @@
 #include "lawn/widget/creditscreen.hpp"
 #include <todlib/effects/effectsystem.hpp>
 #include <todlib/effects/filtereffect.hpp>
-#include <Poplib/graphics/graphics.hpp>
+#include <graphics/graphics.hpp>
 #include <todlib/todstringfile.hpp>
 #include "Lawn/widget/almanacdialog.hpp"
 #include "Lawn/widget/newuserdialog.hpp"
@@ -39,12 +39,12 @@
 #include "lawn/widget/challengescreen.hpp"
 #include "lawn/widget/newoptionsdialog.hpp"
 #include "lawn/widget/seedchooserscreen.hpp"
-#include <PopLib/widget/widgetmanager.hpp>
-#include <PopLib/resources/resourcemanager.hpp>
+#include <widget/widgetmanager.hpp>
+#include <resources/resourcemanager.hpp>
 
-#include <PopLib/widget/checkbox.hpp>
-#include <PopLib/audio/bassmusicinterface.hpp>
-#include <PopLib/widget/dialog.hpp>
+#include <widget/checkbox.hpp>
+#include <audio/bassmusicinterface.hpp>
+#include <widget/dialog.hpp>
 
 bool gIsPartnerBuild = false;
 bool gSlowMo = false;  //0x6A9EAA
@@ -3412,7 +3412,7 @@ void LawnApp::PlaySample(int theSoundNum)
 {
 	if (!mMuteSoundsForCutscene)
 	{
-		AppBase::PlaySample(theSoundNum);
+		//AppBase::PlaySample(theSoundNum);
 	}
 }
 

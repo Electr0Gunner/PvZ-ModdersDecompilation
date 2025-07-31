@@ -9,7 +9,7 @@ public:
 	int						mSeedBankIndex;			//+0x24
 	SeedType				mType;					//+0x28
 	SeedType				mImitaterType;			//+0x2C
-	CursorType				mCursorType;			//+0x30
+	LawnCursorType				mCursorType;			//+0x30
 	CoinID					mCoinID;				//+0x34
 	PlantID					mGlovePlantID;			//+0x38
 	PlantID					mDuplicatorPlantID;		//+0x3C

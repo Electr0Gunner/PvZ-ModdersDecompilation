@@ -5,7 +5,7 @@
 #include "resources.hpp"
 #include "gameconstants.hpp"
 #include "lawn/system/playerinfo.hpp"
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 CheatDialog::CheatDialog(LawnApp* theApp) : LawnDialog(theApp, Dialogs::DIALOG_CHEAT, true, "CHEAT", "Enter New Level:", "", Dialog::BUTTONS_OK_CANCEL)
 {

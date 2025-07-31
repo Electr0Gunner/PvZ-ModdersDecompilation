@@ -2,7 +2,7 @@
 #define __TODFOLEY_H__
 
 #include <resources.hpp>
-#include <PopLib/audio/openalsoundinstance.hpp>
+#include <audio/openalsoundinstance.hpp>
 using namespace PopLib;
 
 #define MAX_FOLEY_TYPES 110

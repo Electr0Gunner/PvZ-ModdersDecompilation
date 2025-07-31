@@ -45,7 +45,7 @@ public:
     bool                    IsZenGardenFull(bool theIncludeDroppedPresents);
     void                    FindOpenZenGardenSpot(int& theSpotX, int& theSpotY);
     void                    AddPottedPlant(PottedPlant* thePottedPlant);
-    void                    MouseDownWithTool(int x, int y, CursorType theCursorType);
+    void                    MouseDownWithTool(int x, int y, LawnCursorType theCursorType);
     void                    MovePlant(Plant* thePlant, int theGridX, int theGridY);
     void                    MouseDownWithMoneySign(Plant* thePlant);
     Plant*                  PlacePottedPlant(int thePottedPlantIndex);
@@ -68,7 +68,7 @@ public:
     void                    PlantFulfillNeed(Plant* thePlant);
     void                    PlantWatered(Plant* thePlant);
     PottedPlantNeed         GetPlantsNeed(PottedPlant* thePottedPlant);
-    void                    MouseDownWithFeedingTool(int x, int y, CursorType theCursorType);
+    void                    MouseDownWithFeedingTool(int x, int y, LawnCursorType theCursorType);
     void                    DrawPlantOverlay(Graphics* g, Plant* thePlant);
     PottedPlant*            PottedPlantFromIndex(int thePottedPlantIndex);
     bool                    WasPlantNeedFulfilledToday(PottedPlant* thePottedPlant);

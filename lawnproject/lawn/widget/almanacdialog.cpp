@@ -12,7 +12,7 @@
 #include "lawn/system/pooleffect.hpp"
 #include "lawn/system/reanimationlawn.hpp"
 #include <todlib/todstringfile.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 bool gZombieDefeated[NUM_ZOMBIE_TYPES] = { false };
 

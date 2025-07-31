@@ -17,20 +17,20 @@
 #include "lawn/widget/seedchooserscreen.hpp"
 #include <todlib/attachment.hpp>
 #include <todlib/reanimation/reanimator.hpp>
-#include <PopLib/widget/dialog.hpp>
-#include <PopLib/math/mtrand.hpp>
+#include <widget/dialog.hpp>
+#include <math/mtrand.hpp>
 #include <todlib/effects/todparticle.hpp>
-#include <PopLib/graphics/sysfont.hpp>
+#include <graphics/sysfont.hpp>
 #include <todlib/effects/effectsystem.hpp>
 #include <todlib/todstringfile.hpp>
-#include <PopLib/graphics/imagefont.hpp>
-#include <PopLib/audio/soundmanager.hpp>
-#include <PopLib/widget/buttonwidget.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
-#include <PopLib/audio/soundinstance.hpp>
+#include <graphics/imagefont.hpp>
+#include <audio/soundmanager.hpp>
+#include <widget/buttonwidget.hpp>
+#include <widget/widgetmanager.hpp>
+#include <audio/soundinstance.hpp>
 
 #define POPWORK_PERF_ENABLED
-#include <PopLib/debug/perftimer.hpp>
+#include <debug/perftimer.hpp>
 
 //#define MEMTRACE
 //#include "../SexyAppFramework/memmgr.h"
@@ -496,7 +496,7 @@ void Board::AddGraveStones(int theGridX, int theCount, MTRand& theLevelRNG)
 	int i = 0;
 	while (i < theCount)
 	{
-		int aGridY = theLevelRNG.Next((unsigned long)MAX_GRID_SIZE_Y);
+		int aGridY = theLevelRNG.Next((ulong)MAX_GRID_SIZE_Y);
 		//if (aAllowGraveStone[aGridY])
 		//{
 		//	aAllowGraveStone[aGridY] = false;
@@ -2019,17 +2019,17 @@ Coin* Board::AddCoin(int theX, int theY, CoinType theCoinType, CoinMotion theCoi
 bool Board::IsPlantInCursor()
 {
 	return 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_BANK || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_DUPLICATOR || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW;
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_BANK || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_DUPLICATOR || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW;
 }
 
 //0x40CD10
 SeedType Board::GetSeedTypeInCursor()
 {
-	if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_WHEEELBARROW)
+	if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_WHEEELBARROW)
 	{
 		PottedPlant* aPottedPlant = mApp->mZenGarden->GetPottedPlantInWheelbarrow();
 		if (aPottedPlant)
@@ -2048,11 +2048,11 @@ SeedType Board::GetSeedTypeInCursor()
 //0x40CD80
 void Board::RefreshSeedPacketFromCursor()
 {
-	if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN)
+	if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN)
 	{
 		mCoins.DataArrayTryToGet(mCursorObject->mCoinID)->DroppedUsableSeed();
 	}
-	else if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_BANK)
+	else if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_BANK)
 	{
 		TOD_ASSERT(mCursorObject->mSeedBankIndex >= 0 && mCursorObject->mSeedBankIndex < mSeedBank->mNumPackets);
 		mSeedBank->mSeedPackets[mCursorObject->mSeedBankIndex].Activate();
@@ -3025,11 +3025,11 @@ void Board::UpdateCursor()
 		break;
 
 	case GameObjectType::OBJECT_TYPE_SCARY_POT:
-		if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_NORMAL)
+		if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_NORMAL)
 		{
 			aShowFinger = true;
 		}
-		else if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_HAMMER)
+		else if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_HAMMER)
 		{
 			aHideCursor = true;
 		}
@@ -3047,7 +3047,7 @@ void Board::UpdateCursor()
 		break;
 
 	default:
-		if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_HAMMER)
+		if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_HAMMER)
 		{
 			aHideCursor = true;
 		}
@@ -3141,7 +3141,7 @@ bool Board::IsPlantInGoldWateringCanRange(int theMouseX, int theMouseY, Plant* t
 //0x40E940
 void Board::HighlightPlantsForMouse(int theMouseX, int theMouseY)
 {
-	if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_WATERING_CAN && mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_GOLD_WATERINGCAN])
+	if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_WATERING_CAN && mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_GOLD_WATERINGCAN])
 	{
 		Plant* aPlant = nullptr;
 		while (IteratePlants(aPlant))
@@ -3225,15 +3225,15 @@ void Board::UpdateMousePosition()
 	}
 
 	// 手持铲子或花园工具时，令作用的植物高亮
-	if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_SHOVEL || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_WATERING_CAN || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_FERTILIZER ||
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_BUG_SPRAY || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PHONOGRAPH || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_CHOCOLATE ||
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_GLOVE || 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_MONEY_SIGN ||
-		(mCursorObject->mCursorType == CursorType::CURSOR_TYPE_WHEEELBARROW && !mApp->mZenGarden->GetPottedPlantInWheelbarrow()))
+	if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_SHOVEL || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_WATERING_CAN || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_FERTILIZER ||
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_BUG_SPRAY || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PHONOGRAPH || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE ||
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_GLOVE || 
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_MONEY_SIGN ||
+		(mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_WHEEELBARROW && !mApp->mZenGarden->GetPottedPlantInWheelbarrow()))
 	{
 		HighlightPlantsForMouse(aMouseX, aMouseY);
 		return;
@@ -3666,7 +3666,7 @@ void Board::MouseDownCobcannonFire(int x, int y, int theClickCount)
 			return;  // 误点检测：点击加农炮后的 30cs 内，点击的位置和准心位置之间的距离小于 100 时，将被判定为误点
 		}
 
-		if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_PLANT_FROM_DUPLICATOR)
+		if (mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_PLANT_FROM_DUPLICATOR)
 		{
 			Plant* aCobcannon = mPlants.DataArrayTryToGet(mCursorObject->mCobCannonPlantID);
 			if (aCobcannon)
@@ -3839,7 +3839,7 @@ void Board::MouseDownWithPlant(int x, int y, int theClickCount)
 		}
 
 		// 特定情况下，放下原有手持的植物
-		if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE || mApp->IsWhackAZombieLevel())
+		if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE || mApp->IsWhackAZombieLevel())
 		{
 			RefreshSeedPacketFromCursor();
 			mApp->PlayFoley(FoleyType::FOLEY_DROP);
@@ -3875,7 +3875,7 @@ void Board::MouseDownWithPlant(int x, int y, int theClickCount)
 	ClearAdvice(AdviceType::ADVICE_SURVIVE_FLAGS);
 
 	// 无免费种植、非传送带关卡的卡槽植物，判断阳光是否充足：充足则扣除阳光，不足则退出
-	if (!mApp->mEasyPlantingCheat && mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_BANK && !HasConveyorBeltSeedBank())
+	if (!mApp->mEasyPlantingCheat && mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_BANK && !HasConveyorBeltSeedBank())
 	{
 		if (!TakeSunMoney(GetCurrentPlantCost(aPlantingSeedType, SeedType::SEED_NONE)))
 		{
@@ -3933,22 +3933,22 @@ void Board::MouseDownWithPlant(int x, int y, int theClickCount)
 		}
 	}
 
-	if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
+	if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
 	{
 		mApp->mZenGarden->MovePlant(mPlants.DataArrayTryToGet(mCursorObject->mGlovePlantID), aGridX, aGridY);
 	}
-	else if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW)
+	else if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW)
 	{
 		mApp->mZenGarden->MouseDownWithFullWheelBarrow(x, y);
 	}
-	else if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN)
+	else if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN)
 	{
 		AddPlant(aGridX, aGridY, mCursorObject->mType, mCursorObject->mImitaterType);
 		Coin* aCoin = mCoins.DataArrayTryToGet(mCursorObject->mCoinID);
 		mCursorObject->mCoinID = CoinID::COINID_NULL;
 		aCoin->Die();
 	}
-	else if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_BANK)
+	else if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_BANK)
 	{
 		Plant* aPlant = AddPlant(aGridX, aGridY, mCursorObject->mType, mCursorObject->mImitaterType);
 		if (aIsAwake)
@@ -4091,7 +4091,7 @@ void Board::TutorialArrowRemove()
 }
 
 //0x411060
-void Board::MouseDownWithTool(int x, int y, int theClickCount, CursorType theCursorType)
+void Board::MouseDownWithTool(int x, int y, int theClickCount, LawnCursorType theCursorType)
 {
 	if (theClickCount < 0)
 	{
@@ -4116,7 +4116,7 @@ void Board::MouseDownWithTool(int x, int y, int theClickCount, CursorType theCur
 	{
 		mApp->PlayFoley(FoleyType::FOLEY_DROP);
 	}
-	else if (theCursorType == CursorType::CURSOR_TYPE_SHOVEL)
+	else if (theCursorType == LawnCursorType::CURSOR_TYPE_SHOVEL)
 	{
 		mApp->PlayFoley(FoleyType::FOLEY_USE_SHOVEL);
 		mPlantsShoveled++;
@@ -4164,7 +4164,7 @@ Plant* Board::SpecialPlantHitTest(int x, int y)
 //0x411470
 bool Board::MouseHitTestPlant(int x, int y, HitResult* theHitResult)
 {
-	if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_COBCANNON_TARGET || mCursorObject->mCursorType == CursorType::CURSOR_TYPE_HAMMER)
+	if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_COBCANNON_TARGET || mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_HAMMER)
 		return false;
 
 	Plant* aPlant;
@@ -4181,7 +4181,7 @@ bool Board::MouseHitTestPlant(int x, int y, HitResult* theHitResult)
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
 	{
 		aPlant = GetTopPlantAt(aGridX, aGridY, PlantPriority::TOPPLANT_ZEN_TOOL_ORDER);
-		if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_WATERING_CAN && (!aPlant || !mApp->mZenGarden->PlantCanBeWatered(aPlant)))
+		if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_WATERING_CAN && (!aPlant || !mApp->mZenGarden->PlantCanBeWatered(aPlant)))
 		{
 			Plant* aTopPlant = GetTopPlantAt(PixelToGridX(x - 30, y - 20), PixelToGridY(x - 30, y - 20), PlantPriority::TOPPLANT_ZEN_TOOL_ORDER);
 			if (aTopPlant && mApp->mZenGarden->PlantCanBeWatered(aTopPlant))
@@ -4207,7 +4207,7 @@ bool Board::MouseHitTestPlant(int x, int y, HitResult* theHitResult)
 	{
 		return false;
 	}
-	if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_CHOCOLATE && !mApp->mZenGarden->PlantCanHaveChocolate(aPlant))
+	if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE && !mApp->mZenGarden->PlantCanHaveChocolate(aPlant))
 	{
 		theHitResult->mObject = nullptr;
 		theHitResult->mObjectType = GameObjectType::OBJECT_TYPE_NONE;
@@ -4243,9 +4243,9 @@ bool Board::MouseHitTest(int x, int y, HitResult* theHitResult)
 	Rect aShovelButtonRect = GetShovelButtonRect();
 	if (mSeedBank->MouseHitTest(x, y, theHitResult))
 	{
-		if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_NORMAL || 
-			mCursorObject->mCursorType == CursorType::CURSOR_TYPE_COBCANNON_TARGET || 
-			mCursorObject->mCursorType == CursorType::CURSOR_TYPE_HAMMER)
+		if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_NORMAL || 
+			mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_COBCANNON_TARGET || 
+			mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_HAMMER)
 			return true;
 	}
 	if (mShowShovel && aShovelButtonRect.Contains(x, y) && CanInteractWithBoardButtons())
@@ -4254,7 +4254,7 @@ bool Board::MouseHitTest(int x, int y, HitResult* theHitResult)
 		return true;
 	}
 
-	if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_NORMAL || mCursorObject->mCursorType == CursorType::CURSOR_TYPE_HAMMER)
+	if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_NORMAL || mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_HAMMER)
 	{
 		Coin* aCoin = nullptr;
 		Coin* aTopCoin = nullptr;
@@ -4281,11 +4281,11 @@ bool Board::MouseHitTest(int x, int y, HitResult* theHitResult)
 	if (mApp->mGameMode == GameMode::GAMEMODE_CHALLENGE_ZEN_GARDEN)
 	{
 		bool canClick = false;
-		if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_CHOCOLATE && !mApp->mZenGarden->IsStinkyHighOnChocolate())
+		if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE && !mApp->mZenGarden->IsStinkyHighOnChocolate())
 		{
 			canClick = true;
 		}
-		else if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_NORMAL && mApp->mZenGarden->IsStinkySleeping())
+		else if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_NORMAL && mApp->mZenGarden->IsStinkySleeping())
 		{
 			canClick = true;
 		}
@@ -4303,7 +4303,7 @@ bool Board::MouseHitTest(int x, int y, HitResult* theHitResult)
 	}
 	if (mApp->mGameMode == GameMode::GAMEMODE_TREE_OF_WISDOM)
 	{
-		if (mCursorObject->mCursorType == CursorType::CURSOR_TYPE_TREE_FOOD && mChallenge->TreeOfWisdomHitTest(x, y, theHitResult))
+		if (mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_TREE_FOOD && mChallenge->TreeOfWisdomHitTest(x, y, theHitResult))
 		{
 			return true;
 		}
@@ -4338,7 +4338,7 @@ bool Board::MouseHitTest(int x, int y, HitResult* theHitResult)
 		return true;
 
 	if (mApp->IsScaryPotterLevel() && 
-		mCursorObject->mCursorType == CursorType::CURSOR_TYPE_NORMAL &&
+		mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_NORMAL &&
 		mChallenge->mChallengeState != ChallengeState::STATECHALLENGE_SCARY_POTTER_MALLETING && 
 		mApp->mGameScene == GameScenes::SCENE_PLAYING &&
 		mApp->GetDialog(Dialogs::DIALOG_GAME_OVER) == nullptr && 
@@ -4381,7 +4381,7 @@ void Board::PickUpTool(GameObjectType theObjectType)
 		{
 			SetTutorialState(TutorialState::TUTORIAL_SHOVEL_DIG);
 		}
-		mCursorObject->mCursorType = CursorType::CURSOR_TYPE_SHOVEL;
+		mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_SHOVEL;
 		mApp->PlayFoley(FoleyType::FOLEY_SHOVEL);
 		break;
 
@@ -4392,14 +4392,14 @@ void Board::PickUpTool(GameObjectType theObjectType)
 			DisplayAdvice("[ADVICE_ZEN_GARDEN_WATER_PLANT]", MessageStyle::MESSAGE_STYLE_ZEN_GARDEN_LONG, AdviceType::ADVICE_NONE);
 			TutorialArrowRemove();
 		}
-		mCursorObject->mCursorType = CursorType::CURSOR_TYPE_WATERING_CAN;
+		mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_WATERING_CAN;
 		mApp->PlayFoley(FoleyType::FOLEY_DROP);
 		break;
 
 	case GameObjectType::OBJECT_TYPE_FERTILIZER:
 		if (mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_FERTILIZER] > PURCHASE_COUNT_OFFSET)
 		{
-			mCursorObject->mCursorType = CursorType::CURSOR_TYPE_FERTILIZER;
+			mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_FERTILIZER;
 		}
 		else
 		{
@@ -4410,7 +4410,7 @@ void Board::PickUpTool(GameObjectType theObjectType)
 	case GameObjectType::OBJECT_TYPE_BUG_SPRAY:
 		if (mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_BUG_SPRAY] > PURCHASE_COUNT_OFFSET)
 		{
-			mCursorObject->mCursorType = CursorType::CURSOR_TYPE_BUG_SPRAY;
+			mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_BUG_SPRAY;
 		}
 		else
 		{
@@ -4419,14 +4419,14 @@ void Board::PickUpTool(GameObjectType theObjectType)
 		break;
 
 	case GameObjectType::OBJECT_TYPE_PHONOGRAPH:
-		mCursorObject->mCursorType = CursorType::CURSOR_TYPE_PHONOGRAPH;
+		mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_PHONOGRAPH;
 		mApp->PlayFoley(FoleyType::FOLEY_DROP);
 		break;
 
 	case GameObjectType::OBJECT_TYPE_CHOCOLATE:
 		if (mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_CHOCOLATE] > PURCHASE_COUNT_OFFSET)
 		{
-			mCursorObject->mCursorType = CursorType::CURSOR_TYPE_CHOCOLATE;
+			mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_CHOCOLATE;
 		}
 		else
 		{
@@ -4435,17 +4435,17 @@ void Board::PickUpTool(GameObjectType theObjectType)
 		break;
 
 	case GameObjectType::OBJECT_TYPE_GLOVE:
-		mCursorObject->mCursorType = CursorType::CURSOR_TYPE_GLOVE;
+		mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_GLOVE;
 		mApp->PlayFoley(FoleyType::FOLEY_DROP);
 		break;
 
 	case GameObjectType::OBJECT_TYPE_MONEY_SIGN:
-		mCursorObject->mCursorType = CursorType::CURSOR_TYPE_MONEY_SIGN;
+		mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_MONEY_SIGN;
 		mApp->PlayFoley(FoleyType::FOLEY_DROP);
 		break;
 
 	case GameObjectType::OBJECT_TYPE_WHEELBARROW:
-		mCursorObject->mCursorType = CursorType::CURSOR_TYPE_WHEEELBARROW;
+		mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_WHEEELBARROW;
 		mApp->PlayFoley(FoleyType::FOLEY_DROP);
 		break;
 
@@ -4454,7 +4454,7 @@ void Board::PickUpTool(GameObjectType theObjectType)
 		{
 			if (mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_TREE_FOOD] > PURCHASE_COUNT_OFFSET)
 			{
-				mCursorObject->mCursorType = CursorType::CURSOR_TYPE_TREE_FOOD;
+				mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_TREE_FOOD;
 			}
 			else
 			{
@@ -4526,7 +4526,7 @@ void Board::MouseDown(int x, int y, int theClickCount)
 		}
 	}
 
-	CursorType aCursor = mCursorObject->mCursorType;
+	LawnCursorType aCursor = mCursorObject->mCursorType;
 	if (aHitResult.mObjectType == GameObjectType::OBJECT_TYPE_NONE)
 	{
 		if (aCursor == CURSOR_TYPE_COBCANNON_TARGET)
@@ -4547,16 +4547,16 @@ void Board::MouseDown(int x, int y, int theClickCount)
 		return;
 	}
 
-	if (aCursor == CursorType::CURSOR_TYPE_SHOVEL ||
-		aCursor == CursorType::CURSOR_TYPE_WATERING_CAN ||
-		aCursor == CursorType::CURSOR_TYPE_FERTILIZER ||
-		aCursor == CursorType::CURSOR_TYPE_BUG_SPRAY ||
-		aCursor == CursorType::CURSOR_TYPE_PHONOGRAPH ||
-		aCursor == CursorType::CURSOR_TYPE_CHOCOLATE ||
-		aCursor == CursorType::CURSOR_TYPE_GLOVE ||
-		aCursor == CursorType::CURSOR_TYPE_MONEY_SIGN ||
-		aCursor == CursorType::CURSOR_TYPE_WHEEELBARROW ||
-		aCursor == CursorType::CURSOR_TYPE_TREE_FOOD)
+	if (aCursor == LawnCursorType::CURSOR_TYPE_SHOVEL ||
+		aCursor == LawnCursorType::CURSOR_TYPE_WATERING_CAN ||
+		aCursor == LawnCursorType::CURSOR_TYPE_FERTILIZER ||
+		aCursor == LawnCursorType::CURSOR_TYPE_BUG_SPRAY ||
+		aCursor == LawnCursorType::CURSOR_TYPE_PHONOGRAPH ||
+		aCursor == LawnCursorType::CURSOR_TYPE_CHOCOLATE ||
+		aCursor == LawnCursorType::CURSOR_TYPE_GLOVE ||
+		aCursor == LawnCursorType::CURSOR_TYPE_MONEY_SIGN ||
+		aCursor == LawnCursorType::CURSOR_TYPE_WHEEELBARROW ||
+		aCursor == LawnCursorType::CURSOR_TYPE_TREE_FOOD)
 	{
 		MouseDownWithTool(x, y, theClickCount, aCursor);
 	}
@@ -4628,7 +4628,7 @@ void Board::ClearCursor()
 	}
 
 	mCursorObject->mType = SeedType::SEED_NONE;
-	mCursorObject->mCursorType = CursorType::CURSOR_TYPE_NORMAL;
+	mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_NORMAL;
 	mCursorObject->mSeedBankIndex = -1;
 	mCursorObject->mCoinID = CoinID::COINID_NULL;
 	mCursorObject->mDuplicatorPlantID = PlantID::PLANTID_NULL;
@@ -4675,9 +4675,9 @@ bool Board::CanInteractWithBoardButtons()
 	if (mPaused || mApp->GetDialogCount() > 0)
 		return false;
 
-	if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_NORMAL && 
-		mCursorObject->mCursorType != CursorType::CURSOR_TYPE_HAMMER &&
-		mCursorObject->mCursorType != CursorType::CURSOR_TYPE_COBCANNON_TARGET)
+	if (mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_NORMAL && 
+		mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_HAMMER &&
+		mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_COBCANNON_TARGET)
 		return false;
 
 	if (mChallenge->mChallengeState == ChallengeState::STATECHALLENGE_ZEN_FADING)
@@ -6851,7 +6851,7 @@ void Board::DrawZenWheelBarrowButton(Graphics* g, int theOffsetY)
 	Rect aButtonRect = GetShovelButtonRect();
 	GetZenButtonRect(GameObjectType::OBJECT_TYPE_WHEELBARROW, aButtonRect);
 	PottedPlant* aPlant = mApp->mZenGarden->GetPottedPlantInWheelbarrow();
-	if (aPlant && mCursorObject->mCursorType != CursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW)
+	if (aPlant && mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW)
 	{
 		if (mChallenge->mChallengeState == ChallengeState::STATECHALLENGE_ZEN_FADING)
 		{
@@ -6908,7 +6908,7 @@ void Board::DrawZenButtons(Graphics* g)
 		{
 			GetZenButtonRect(aTool, aButtonRect);
 			g->DrawImage(PopLib::IMAGE_SHOVELBANK, aButtonRect.mX, aButtonRect.mY + aOffsetY);
-			if ((int)mCursorObject->mCursorType == (int)CursorType::CURSOR_TYPE_WATERING_CAN + (int)aTool - 6)
+			if ((int)mCursorObject->mCursorType == (int)LawnCursorType::CURSOR_TYPE_WATERING_CAN + (int)aTool - 6)
 			{
 				continue;  // 如果工具正在被手持，则跳过绘制
 			}
@@ -6977,8 +6977,8 @@ void Board::DrawZenButtons(Graphics* g)
 			}
 			else if (aTool == GameObjectType::OBJECT_TYPE_GLOVE)
 			{
-				if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE && 
-					mCursorObject->mCursorType != CursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW)
+				if (mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE && 
+					mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW)
 				{
 					g->DrawImage(PopLib::IMAGE_ZEN_GARDENGLOVE, aButtonRect.mX - 6, aButtonRect.mY + aOffsetY - 4);
 				}
@@ -7025,7 +7025,7 @@ void Board::DrawShovel(Graphics* g)
 			Rect aShovelRect = GetShovelButtonRect();
 			g->DrawImage(PopLib::IMAGE_SHOVELBANK, aShovelRect.mX, aShovelRect.mY);
 
-			if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_SHOVEL)
+			if (mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_SHOVEL)
 			{
 				if (mChallenge->mChallengeState == (ChallengeState)15)
 				{
@@ -7864,7 +7864,7 @@ void Board::KeyDown(KeyCode theKey)
 	}
 	else if (theKey == KeyCode::KEYCODE_ESCAPE)
 	{
-		if (mCursorObject->mCursorType != CursorType::CURSOR_TYPE_NORMAL)
+		if (mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_NORMAL)
 		{
 			RefreshSeedPacketFromCursor();
 		}
@@ -7937,7 +7937,7 @@ void Board::KeyChar(PopChar theChar)
 					if (aNeed == PottedPlantNeed::PLANTNEED_WATER)
 					{
 						aPlant->mHighlighted = true;
-						mApp->mZenGarden->MouseDownWithFeedingTool(aPlant->mX, aPlant->mY, CursorType::CURSOR_TYPE_WATERING_CAN);
+						mApp->mZenGarden->MouseDownWithFeedingTool(aPlant->mX, aPlant->mY, LawnCursorType::CURSOR_TYPE_WATERING_CAN);
 						return;
 					}
 					else if (aNeed == PottedPlantNeed::PLANTNEED_FERTILIZER)
@@ -7947,7 +7947,7 @@ void Board::KeyChar(PopChar theChar)
 						{
 							mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_FERTILIZER] = PURCHASE_COUNT_OFFSET + 1;
 						}
-						mApp->mZenGarden->MouseDownWithFeedingTool(aPlant->mX, aPlant->mY, CursorType::CURSOR_TYPE_FERTILIZER);
+						mApp->mZenGarden->MouseDownWithFeedingTool(aPlant->mX, aPlant->mY, LawnCursorType::CURSOR_TYPE_FERTILIZER);
 						return;
 					}
 					else if (aNeed == PottedPlantNeed::PLANTNEED_BUGSPRAY)
@@ -7957,13 +7957,13 @@ void Board::KeyChar(PopChar theChar)
 						{
 							mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_BUG_SPRAY] = PURCHASE_COUNT_OFFSET + 1;
 						}
-						mApp->mZenGarden->MouseDownWithFeedingTool(aPlant->mX, aPlant->mY, CursorType::CURSOR_TYPE_BUG_SPRAY);
+						mApp->mZenGarden->MouseDownWithFeedingTool(aPlant->mX, aPlant->mY, LawnCursorType::CURSOR_TYPE_BUG_SPRAY);
 						return;
 					}
 					else if (aNeed == PottedPlantNeed::PLANTNEED_PHONOGRAPH)
 					{
 						aPlant->mHighlighted = true;
-						mApp->mZenGarden->MouseDownWithFeedingTool(aPlant->mX, aPlant->mY, CursorType::CURSOR_TYPE_PHONOGRAPH);
+						mApp->mZenGarden->MouseDownWithFeedingTool(aPlant->mX, aPlant->mY, LawnCursorType::CURSOR_TYPE_PHONOGRAPH);
 						return;
 					}
 				}

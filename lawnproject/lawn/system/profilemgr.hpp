@@ -3,7 +3,7 @@
 
 #include <map>
 #include <string>
-#include <PopLib/common.hpp>
+#include <common.hpp>
 
 class DataSync;
 class PlayerInfo;

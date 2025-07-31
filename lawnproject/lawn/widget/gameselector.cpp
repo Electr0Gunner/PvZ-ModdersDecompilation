@@ -15,11 +15,11 @@
 #include "lawn/system/typingcheck.hpp"
 #include <todlib/todfoley.hpp>
 #include <todlib/toddebug.hpp>
-#include <PopLib/graphics/font.hpp>
+#include <graphics/font.hpp>
 #include <todlib/reanimation/reanimator.hpp>
 #include <todlib/effects/todparticle.hpp>
-#include <PopLib/widget/dialog.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/dialog.hpp>
+#include <widget/widgetmanager.hpp>
 
 static float gFlowerCenter[3][2] = { { 765.0f, 483.0f }, { 663.0f, 455.0f }, { 701.0f, 439.0f } };  //0x665430
 

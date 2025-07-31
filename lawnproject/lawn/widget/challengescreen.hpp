@@ -2,7 +2,7 @@
 #define __CHALLENGESCREEN_H__
 
 #include "constenums.hpp"
-#include <PopLib/widget/dialog.hpp>
+#include <widget/dialog.hpp>
 using namespace PopLib;
 
 #define NUM_CHALLENGE_MODES ((int)GameMode::NUM_GAME_MODES - 1)

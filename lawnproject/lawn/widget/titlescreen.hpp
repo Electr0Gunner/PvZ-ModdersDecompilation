@@ -1,8 +1,8 @@
 #ifndef __TITLESCREEN_H__
 #define __TITLESCREEN_H__
 
-#include <PopLib/widget/widget.hpp>
-#include <PopLib/widget/buttonlistener.hpp>
+#include <widget/widget.hpp>
+#include <widget/buttonlistener.hpp>
 
 using namespace PopLib;
 

@@ -22,13 +22,13 @@
 #include <todlib/toddebug.hpp>
 #include <todlib/todfoley.hpp>
 #include <todlib/todcommon.hpp>
-#include <Poplib/graphics/font.hpp>
+#include <graphics/font.hpp>
 #include <todlib/reanimation/reanimator.hpp>
-#include <Poplib/debug/debug.hpp>
-#include <Poplib/math/mtrand.hpp>
+#include <debug/debug.hpp>
+#include <math/mtrand.hpp>
 #include <todlib/effects/todparticle.hpp>
 #include <todlib/todstringfile.hpp>
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 int gZombieWaves[NUM_LEVELS] = {  //0x6A34E8
 	4,  6,  8,  10, 8,  10, 20, 10, 20, 20,
@@ -1158,7 +1158,7 @@ bool Challenge::UpdateToolTip(int theX, int theY)
 	HitResult aHitResult;
 	mBoard->MouseHitTest(theX, theY, &aHitResult);
 	if (aHitResult.mObjectType != GameObjectType::OBJECT_TYPE_SLOT_MACHINE_HANDLE ||
-		mBoard->mCursorObject->mCursorType != CursorType::CURSOR_TYPE_NORMAL ||
+		mBoard->mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_NORMAL ||
 		mChallengeState != ChallengeState::STATECHALLENGE_NORMAL)
 		return false;
 	
@@ -2504,7 +2504,7 @@ void Challenge::InitZombieWavesSurvival()
 	mBoard->mZombieAllowed[ZOMBIE_NORMAL] = true;
 	MTRand aLevelRNG = MTRand(mBoard->GetLevelRandSeed());
 
-	if (aLevelRNG.Next((unsigned long)5) == 0)
+	if (aLevelRNG.Next((ulong)5) == 0)
 	{
 		mBoard->mZombieAllowed[ZOMBIE_NEWSPAPER] = true;
 	}
@@ -2516,7 +2516,7 @@ void Challenge::InitZombieWavesSurvival()
 	int aCapacity = std::min(mSurvivalStage + 1, 9);
 	while (aCapacity > 0)
 	{
-		ZombieType aRandZombie = (ZombieType)aLevelRNG.Next((unsigned long)NUM_ZOMBIE_TYPES);
+		ZombieType aRandZombie = (ZombieType)aLevelRNG.Next((ulong)NUM_ZOMBIE_TYPES);
 		if (mBoard->mZombieAllowed[aRandZombie])																	continue;
 		if (mBoard->IsZombieTypePoolOnly(aRandZombie) && !mBoard->StageHasPool())									continue;
 		if (mBoard->StageHasRoof() && (aRandZombie == ZOMBIE_DIGGER || aRandZombie == ZOMBIE_DANCER))				continue;
@@ -3030,7 +3030,7 @@ void Challenge::SpawnZombieWave()
 void Challenge::DrawStormFlash(Graphics* g, int theTime, int theMaxAmount)
 {
 	MTRand aDrawRand = MTRand(mBoard->mMainCounter / 6);
-	int aDarkness = TodAnimateCurve(150, 0, theTime, 255 - theMaxAmount, 255, CURVE_LINEAR) + aDrawRand.NextNoAssert((unsigned long)64) - 32;
+	int aDarkness = TodAnimateCurve(150, 0, theTime, 255 - theMaxAmount, 255, CURVE_LINEAR) + aDrawRand.NextNoAssert((ulong)64) - 32;
 	// 设置暴风雨阴暗的颜色
 	g->SetColor(Color(0, 0, 0, ClampInt(aDarkness, 0, 255)));
 	// 绘制暴风雨阴暗的主色

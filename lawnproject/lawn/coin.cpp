@@ -1237,7 +1237,7 @@ void Coin::Collect()
         TOD_ASSERT(mBoard);
 
         mBoard->mCursorObject->mType = mUsableSeedType;
-        mBoard->mCursorObject->mCursorType = CursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN;
+        mBoard->mCursorObject->mCursorType = ::LawnCursorType::CURSOR_TYPE_PLANT_FROM_USABLE_COIN;
         mBoard->mCursorObject->mCoinID = (CoinID)mBoard->mCoins.DataArrayGetID(this);
 
         mGroundY = (int)mPosY;
@@ -1430,7 +1430,7 @@ bool Coin::MouseHitTest(int theX, int theY, HitResult* theHitResult)
     }
     if (mType == CoinType::COIN_USABLE_SEED_PACKET && mBoard)
     {
-        if (mBoard->mCursorObject->mCursorType != CursorType::CURSOR_TYPE_NORMAL && !mApp->IsWhackAZombieLevel())
+        if (mBoard->mCursorObject->mCursorType != ::LawnCursorType::CURSOR_TYPE_NORMAL && !mApp->IsWhackAZombieLevel())
         {
             aCanHitCoin = false;
         }

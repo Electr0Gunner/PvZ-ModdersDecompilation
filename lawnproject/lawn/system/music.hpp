@@ -2,7 +2,7 @@
 #define __MUSIC_H__
 
 #include <string>
-#include <PopLib/audio/bass.h>
+#include <bass.h>
 
 class LawnApp;
 namespace PopLib

@@ -3,9 +3,9 @@
 #include "lawnapp.hpp"
 #include "lawn/system/reanimationlawn.hpp"
 #include <todlib/toddebug.hpp>
-#include <PopLib/graphics/color.hpp>
+#include <graphics/color.hpp>
 #include <todlib/reanimation/reanimator.hpp>
-#include <PopLib/graphics/memoryimage.hpp>
+#include <graphics/memoryimage.hpp>
 
 //0x46EF00
 void ReanimatorCache::UpdateReanimationForVariation(Reanimation* theReanim, DrawVariation theDrawVariation)
@@ -99,7 +99,7 @@ MemoryImage* ReanimatorCache::MakeBlankMemoryImage(int theWidth, int theHeight)
 	MemoryImage* aImage = new MemoryImage();
 
 	int aBitsCount = theWidth * theHeight;
-	aImage->mBits = new unsigned long[aBitsCount + 1];
+	aImage->mBits = new ulong[aBitsCount + 1];
 	aImage->mWidth = theWidth;
 	aImage->mHeight = theHeight;
 	aImage->mHasTrans = true;

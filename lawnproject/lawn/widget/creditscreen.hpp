@@ -2,9 +2,9 @@
 #define __CREDITSCREEN_H__
 
 #include "constenums.hpp"
-#include <PopLib/widget/widget.hpp>
-#include <PopLib/debug/perftimer.hpp>
-#include <PopLib/widget/buttonlistener.hpp>
+#include <widget/widget.hpp>
+#include <debug/perftimer.hpp>
+#include <widget/buttonlistener.hpp>
 
 using namespace PopLib;
 

@@ -201,7 +201,7 @@ enum CrazyDaveState
     CRAZY_DAVE_HANDING_TALKING = 5,
     CRAZY_DAVE_HANDING_IDLING = 6
 };
-enum CursorType
+enum LawnCursorType
 {
     CURSOR_TYPE_NORMAL,
     CURSOR_TYPE_PLANT_FROM_BANK,

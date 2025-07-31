@@ -3,7 +3,7 @@
 
 #include "todlib/dataarray.hpp"
 #include "todlib/effects/filtereffect.hpp"
-#include <PopLib/math/matrix.hpp>
+#include <math/matrix.hpp>
 using namespace PopLib;
 
 class Reanimation;

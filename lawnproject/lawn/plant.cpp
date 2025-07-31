@@ -2669,7 +2669,7 @@ void Plant::UpdateReanimColor()
     Color aColorOverride;
 
     bool isOnGlove = false;
-    if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
+    if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
     {
         Plant* aPlant = mBoard->mPlants.DataArrayTryToGet((unsigned int)mBoard->mCursorObject->mGlovePlantID);
         if (aPlant && aPlant->mPlantCol == mPlantCol && aPlant->mRow == mRow)
@@ -4232,7 +4232,7 @@ void Plant::MouseDown(int x, int y, int theClickCount)
     {
         mBoard->ClearCursor();
         mBoard->mCursorObject->mType = SeedType::SEED_NONE;
-        mBoard->mCursorObject->mCursorType = CursorType::CURSOR_TYPE_COBCANNON_TARGET;
+        mBoard->mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_COBCANNON_TARGET;
         mBoard->mCursorObject->mSeedBankIndex = -1;
         mBoard->mCursorObject->mCoinID = CoinID::COINID_NULL;
         mBoard->mCursorObject->mCobCannonPlantID = (PlantID)mBoard->mPlants.DataArrayGetID(this);

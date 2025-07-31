@@ -6,7 +6,7 @@
 #include "lawn/widget/seedchooserscreen.hpp"
 #include "lawn/tooltipwidget.hpp"
 #include "gameconstants.hpp"
-#include <Poplib/widget/widgetmanager.hpp>
+#include <widget/widgetmanager.hpp>
 
 //0x482B00
 ImitaterDialog::ImitaterDialog() : 

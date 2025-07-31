@@ -1,8 +1,8 @@
 #include <todlib/toddebug.hpp>
 #include "todlib/todcommon.hpp"
 #include "todlib/todstringfile.hpp"
-#include <PopLib/paklib/pakinterface.hpp>
-#include <PopLib/graphics/font.hpp>
+#include <paklib/pakinterface.hpp>
+#include <graphics/font.hpp>
 
 int gTodStringFormatCount;               //[0x69DE4C]
 TodStringListFormat* gTodStringFormats;  //[0x69DA34]

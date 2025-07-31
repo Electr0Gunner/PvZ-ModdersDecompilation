@@ -2,8 +2,8 @@
 #include "todlib/todcommon.hpp"
 #include "todlib/reanimation/reanimator.hpp"
 #include "todlib/reanimation/reanimatlas.hpp"
-#include <PopLib/debug/perftimer.hpp>
-#include <PopLib/graphics/memoryimage.hpp>
+#include <debug/perftimer.hpp>
+#include <graphics/memoryimage.hpp>
 
 //0x470250
 ReanimAtlas::ReanimAtlas()
@@ -38,7 +38,7 @@ MemoryImage* ReanimAtlasMakeBlankMemoryImage(int theWidth, int theHeight)
 	MemoryImage* aImage = new MemoryImage();
 
 	int aBitsCount = theWidth * theHeight;
-	aImage->mBits = new unsigned long[aBitsCount + 1];
+	aImage->mBits = new ulong[aBitsCount + 1];
 	aImage->mWidth = theWidth;
 	aImage->mHeight = theHeight;
 	aImage->mHasTrans = true;

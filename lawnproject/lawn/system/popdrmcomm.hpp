@@ -1,7 +1,7 @@
 #ifndef __POPDRMCOMM_H__
 #define __POPDRMCOMM_H__
 
-#include <PopLib/misc/critsect.hpp>
+#include <misc/critsect.hpp>
 using namespace PopLib;
 
 class PopDRMComm

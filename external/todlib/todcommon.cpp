@@ -6,14 +6,14 @@
 #include "resources.hpp"
 #include "todstringfile.hpp"
 #include <gameconstants.hpp>
-#include <PopLib/graphics/font.hpp>
-#include <PopLib/debug/debug.hpp>
-#include <PopLib/graphics/sdlimage.hpp>
-#include <Poplib/graphics/graphics.hpp>
-#include <PopLib/graphics/imagefont.hpp>
-#include <PopLib/debug/perftimer.hpp>
-#include <PopLib/math/matrix.hpp>
-#include <PopLib/graphics/sdlinterface.hpp>
+#include <graphics/font.hpp>
+#include <debug/debug.hpp>
+#include <graphics/gpuimage.hpp>
+#include <graphics/graphics.hpp>
+#include <graphics/imagefont.hpp>
+#include <debug/perftimer.hpp>
+#include <math/matrix.hpp>
+#include <graphics/renderer.hpp>
 
 //0x510BC0
 void Tod_SWTri_AddAllDrawTriFuncs()
@@ -719,11 +719,11 @@ void TodBltMatrix(Graphics* g, Image* theImage, const Matrix3& theTransform, con
 	{
 		g->mDestImage->BltMatrix(theImage, aOffsetX, aOffsetY, theTransform, theClipRect, theColor, theDrawMode, theSrcRect, g->mLinearBlend);
 	}
-	else if (SDLImage::Check3D(g->mDestImage))
+	else if (MemoryImage::Check3D(g->mDestImage))
 	{
 		theImage->mDrawn = true;
-		SDLInterface* aInterface = ((SDLImage*)g->mDestImage)->mInterface;
-		aInterface->BltTransformed(theImage, nullptr, theColor, theDrawMode, theSrcRect, theTransform, g->mLinearBlend, aOffsetX, aOffsetY, true);
+		Renderer* aRenderer = ((GPUImage*)g->mDestImage)->mRenderer;
+		aRenderer->BltTransformed(theImage, nullptr, theColor, theDrawMode, theSrcRect, theTransform, g->mLinearBlend, aOffsetX, aOffsetY, true);
 	}
 	else
 	{
@@ -855,7 +855,7 @@ void TodDrawImageCenterScaledF(Graphics* g, Image* theImage, float thePosX, floa
 }
 
 //0x512AC0
-unsigned long AverageNearByPixels(MemoryImage* theImage, unsigned long* thePixel, int x, int y)
+ulong AverageNearByPixels(MemoryImage* theImage, ulong* thePixel, int x, int y)
 {
 	int aRed = 0;
 	int aGreen = 0;
@@ -911,7 +911,7 @@ void FixPixelsOnAlphaEdgeForBlending(Image* theImage)
 	PerfTimer aTimer;
 	aTimer.Start();
 
-	unsigned long* aBitsPtr = aImage->mBits;
+	ulong* aBitsPtr = aImage->mBits;
 	for (int y = 0; y < theImage->mHeight; y++)
 	{
 		for (int x = 0; x < theImage->mWidth; x++)
@@ -1124,7 +1124,7 @@ bool TodResourceManager::TodLoadNextResource()
 		case ResType_Image:
 		{
 			ImageRes* anImageRes = (ImageRes*)aRes;
-			if ((SDLImage*)anImageRes->mImage != nullptr)
+			if ((GPUImage*)anImageRes->mImage != nullptr)
 			{
 				mCurResGroupListItr++;
 				continue;

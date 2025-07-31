@@ -16,7 +16,7 @@
 #include <todlib/attachment.hpp>
 #include <todlib/effects/todparticle.hpp>
 #include <todlib/effects/effectsystem.hpp>
-#include <Poplib/graphics/graphics.hpp>
+#include <graphics/graphics.hpp>
 #include <todlib/todstringfile.hpp>
 
 static SpecialGridPlacement gGreenhouseGridPlacement[] =  //0x69DE50
@@ -875,7 +875,7 @@ PottedPlantNeed ZenGarden::GetPlantsNeed(PottedPlant* thePottedPlant)
 }
 
 //0x51EB70
-void ZenGarden::MouseDownWithFeedingTool(int x, int y, CursorType theCursorType)
+void ZenGarden::MouseDownWithFeedingTool(int x, int y, LawnCursorType theCursorType)
 {
     Plant* aPlantToFeed = nullptr;
     {
@@ -890,7 +890,7 @@ void ZenGarden::MouseDownWithFeedingTool(int x, int y, CursorType theCursorType)
         }
     }
 
-    if (theCursorType == CursorType::CURSOR_TYPE_CHOCOLATE)
+    if (theCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE)
     {
         TOD_ASSERT(mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_CHOCOLATE] > PURCHASE_COUNT_OFFSET);
 
@@ -924,7 +924,7 @@ void ZenGarden::MouseDownWithFeedingTool(int x, int y, CursorType theCursorType)
         aZenTool->mPosY = aPlantToFeed->mY + 40;
         aZenTool->mRenderOrder = Board::MakeRenderOrder(RenderLayer::RENDER_LAYER_ABOVE_UI, 0, 0);
 
-        if (theCursorType == CursorType::CURSOR_TYPE_WATERING_CAN)
+        if (theCursorType == LawnCursorType::CURSOR_TYPE_WATERING_CAN)
         {
             if (mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_GOLD_WATERINGCAN])
             {
@@ -945,7 +945,7 @@ void ZenGarden::MouseDownWithFeedingTool(int x, int y, CursorType theCursorType)
                 mApp->PlayFoley(FoleyType::FOLEY_WATERING);
             }
         }
-        else if (theCursorType == CursorType::CURSOR_TYPE_FERTILIZER)
+        else if (theCursorType == LawnCursorType::CURSOR_TYPE_FERTILIZER)
         {
             Reanimation* aFertilizerReanim = mApp->AddReanimation(aPlantToFeed->mX, aPlantToFeed->mY, 0, ReanimationType::REANIM_ZENGARDEN_FERTILIZER);
             aFertilizerReanim->mLoopType = ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD;
@@ -956,7 +956,7 @@ void ZenGarden::MouseDownWithFeedingTool(int x, int y, CursorType theCursorType)
             TOD_ASSERT(mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_FERTILIZER] > PURCHASE_COUNT_OFFSET);
             mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_FERTILIZER]--;
         }
-        else if (theCursorType == CursorType::CURSOR_TYPE_BUG_SPRAY)
+        else if (theCursorType == LawnCursorType::CURSOR_TYPE_BUG_SPRAY)
         {
             Reanimation* aBugSprayReanim = mApp->AddReanimation(aPlantToFeed->mX + 54, aPlantToFeed->mY, 0, ReanimationType::REANIM_ZENGARDEN_BUGSPRAY);
             aBugSprayReanim->mLoopType = ReanimLoopType::REANIM_PLAY_ONCE_AND_HOLD;
@@ -967,7 +967,7 @@ void ZenGarden::MouseDownWithFeedingTool(int x, int y, CursorType theCursorType)
             TOD_ASSERT(mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_BUG_SPRAY] > PURCHASE_COUNT_OFFSET);
             mApp->mPlayerInfo->mPurchases[(int)StoreItem::STORE_ITEM_BUG_SPRAY]--;
         }
-        else if (theCursorType == CursorType::CURSOR_TYPE_PHONOGRAPH)
+        else if (theCursorType == LawnCursorType::CURSOR_TYPE_PHONOGRAPH)
         {
             Reanimation* aPhonographReanim = mApp->AddReanimation(aPlantToFeed->mX + 20, aPlantToFeed->mY + 34, 0, ReanimationType::REANIM_ZENGARDEN_PHONOGRAPH);
             aPhonographReanim->mAnimRate = 20.0f;
@@ -1053,20 +1053,20 @@ void ZenGarden::DoFeedingTool(int x, int y, GridItemState theToolType)
 }
 
 //0x51F580
-void ZenGarden::MouseDownWithTool(int x, int y, CursorType theCursorType)
+void ZenGarden::MouseDownWithTool(int x, int y, LawnCursorType theCursorType)
 {
-    if (theCursorType == CursorType::CURSOR_TYPE_WHEEELBARROW && GetPottedPlantInWheelbarrow())
+    if (theCursorType == LawnCursorType::CURSOR_TYPE_WHEEELBARROW && GetPottedPlantInWheelbarrow())
     {
         MouseDownWithFullWheelBarrow(x, y);
         mBoard->ClearCursor();
         return;
     }
 
-    if (theCursorType == CursorType::CURSOR_TYPE_WATERING_CAN || 
-        theCursorType == CursorType::CURSOR_TYPE_FERTILIZER || 
-        theCursorType == CursorType::CURSOR_TYPE_BUG_SPRAY || 
-        theCursorType == CursorType::CURSOR_TYPE_PHONOGRAPH || 
-        theCursorType == CursorType::CURSOR_TYPE_CHOCOLATE)
+    if (theCursorType == LawnCursorType::CURSOR_TYPE_WATERING_CAN || 
+        theCursorType == LawnCursorType::CURSOR_TYPE_FERTILIZER || 
+        theCursorType == LawnCursorType::CURSOR_TYPE_BUG_SPRAY || 
+        theCursorType == LawnCursorType::CURSOR_TYPE_PHONOGRAPH || 
+        theCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE)
     {
         MouseDownWithFeedingTool(x, y, theCursorType);
         return;
@@ -1080,20 +1080,20 @@ void ZenGarden::MouseDownWithTool(int x, int y, CursorType theCursorType)
         return;
     }
 
-    if (theCursorType == CursorType::CURSOR_TYPE_MONEY_SIGN)
+    if (theCursorType == LawnCursorType::CURSOR_TYPE_MONEY_SIGN)
     {
         MouseDownWithMoneySign(aPlant);
     }
-    else if (theCursorType == CursorType::CURSOR_TYPE_WHEEELBARROW)
+    else if (theCursorType == LawnCursorType::CURSOR_TYPE_WHEEELBARROW)
     {
         MouseDownWithEmptyWheelBarrow(aPlant);
         mBoard->ClearCursor();
     }
-    else if (theCursorType == CursorType::CURSOR_TYPE_GLOVE)
+    else if (theCursorType == LawnCursorType::CURSOR_TYPE_GLOVE)
     {
         mBoard->mCursorObject->mType = aPlant->mSeedType;
         mBoard->mCursorObject->mImitaterType = aPlant->mImitaterType;
-        mBoard->mCursorObject->mCursorType = CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE;
+        mBoard->mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE;
         mBoard->mCursorObject->mGlovePlantID = (PlantID)mBoard->mPlants.DataArrayGetID(aPlant);
         //mBoard->mIgnoreMouseUp = true;
         mApp->PlaySample(SOUND_TAP);
@@ -1537,7 +1537,7 @@ void ZenGarden::StinkyUpdate(GridItem* theStinky)
         Reanimation* aSleepingReanim = FindReanimAttachment(aStinkyReanim->GetTrackInstanceByName("shell")->mAttachmentID);
         TOD_ASSERT(aSleepingReanim);
 
-        if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_CHOCOLATE)
+        if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE)
         {
             aSleepingReanim->AssignRenderGroupToPrefix("z", RENDER_GROUP_HIDDEN);
         }
@@ -1610,7 +1610,7 @@ void ZenGarden::StinkyUpdate(GridItem* theStinky)
 
     if (theStinky->mGridItemState == GridItemState::GRIDITEM_STINKY_WALKING_LEFT || theStinky->mGridItemState == GridItemState::GRIDITEM_STINKY_WALKING_RIGHT)
     {
-        if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_CHOCOLATE && !IsStinkyHighOnChocolate())
+        if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE && !IsStinkyHighOnChocolate())
         {
             if (!aStinkyReanim->IsAnimPlaying("anim_idle"))
             {
@@ -1632,7 +1632,7 @@ void ZenGarden::StinkyUpdate(GridItem* theStinky)
         aSpeedY = 1.0f;
         aSpeedX = std::max(aSpeedX, 0.5f);
     }
-    else if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_CHOCOLATE)
+    else if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_CHOCOLATE)
     {
         aSpeedY = 0.0f;
         aSpeedX = 0.0f;
@@ -1742,7 +1742,7 @@ void ZenGarden::ZenGardenUpdate()
     }
 
     mApp->UpdateCrazyDave();
-    if (mBoard->mCursorObject->mCursorType != CursorType::CURSOR_TYPE_NORMAL)
+    if (mBoard->mCursorObject->mCursorType != LawnCursorType::CURSOR_TYPE_NORMAL)
     {
         mBoard->mChallenge->mChallengeState = ChallengeState::STATECHALLENGE_NORMAL;
         mBoard->mChallenge->mChallengeStateCounter = 3000;
@@ -2047,9 +2047,9 @@ void ZenGarden::DrawBackdrop(Graphics* g)
         return;
     }
 
-    if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW || 
-        mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_WHEEELBARROW || 
-        mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
+    if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW || 
+        mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_WHEEELBARROW || 
+        mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
     {
         int aCount;
         SpecialGridPlacement* aSpecialGrids = GetSpecialGridPlacements(aCount);
@@ -2115,11 +2115,11 @@ bool ZenGarden::MouseDownZenGarden(int x, int y, int theClickCount, HitResult* t
     }
     mBoard->mChallenge->mChallengeStateCounter = 3000;
 
-    if (theHitResult->mObjectType == GameObjectType::OBJECT_TYPE_STINKY && mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_NORMAL)
+    if (theHitResult->mObjectType == GameObjectType::OBJECT_TYPE_STINKY && mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_NORMAL)
     {
         WakeStinky();
     }
-    else if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_GLOVE)
+    else if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_GLOVE)
     {
         if (mBoard->CanUseGameObject(GameObjectType::OBJECT_TYPE_WHEELBARROW))
         {
@@ -2132,12 +2132,12 @@ bool ZenGarden::MouseDownZenGarden(int x, int y, int theClickCount, HitResult* t
                 mBoard->ClearCursor();
                 mBoard->mCursorObject->mType = aPottedPlant->mSeedType;
                 mBoard->mCursorObject->mImitaterType = SeedType::SEED_NONE;
-                mBoard->mCursorObject->mCursorType = CursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW;
+                mBoard->mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_PLANT_FROM_WHEEL_BARROW;
                 return true;
             }
         }
     }
-    else if (mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
+    else if (mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_PLANT_FROM_GLOVE)
     {
         if (mBoard->CanUseGameObject(GameObjectType::OBJECT_TYPE_WHEELBARROW))
         {
@@ -2153,7 +2153,7 @@ bool ZenGarden::MouseDownZenGarden(int x, int y, int theClickCount, HitResult* t
             }
         }
     }
-    else if (theHitResult->mObjectType == GameObjectType::OBJECT_TYPE_NONE && mBoard->mCursorObject->mCursorType == CursorType::CURSOR_TYPE_NORMAL && 
+    else if (theHitResult->mObjectType == GameObjectType::OBJECT_TYPE_NONE && mBoard->mCursorObject->mCursorType == LawnCursorType::CURSOR_TYPE_NORMAL && 
         mGardenType == GardenType::GARDEN_AQUARIUM && theClickCount <= -1)
     {
         mApp->PlaySample(SOUND_TAPGLASS);

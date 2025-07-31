@@ -3,7 +3,7 @@
 
 #include "todlib/dataarray.hpp"
 #include <constenums.hpp>
-#include <PopLib/math/matrix.hpp>
+#include <math/matrix.hpp>
 
 namespace PopLib
 {

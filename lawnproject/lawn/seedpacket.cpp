@@ -6,9 +6,9 @@
 #include "lawn/cursorobject.hpp"
 #include "resources.hpp"
 #include "lawn/messagewidget.hpp"
-#include <PopLib/graphics/font.hpp>
+#include <graphics/font.hpp>
 #include <todlib/effects/filtereffect.hpp>
-#include <PopLib/math/matrix.hpp>
+#include <math/matrix.hpp>
 
 SeedPacket::SeedPacket()
 {
@@ -812,7 +812,7 @@ void SeedPacket::MouseDown(int x, int y, int theClickCount)
 	{
 		mBoard->mCursorObject->mType = mPacketType;
 		mBoard->mCursorObject->mImitaterType = mImitaterType;
-		mBoard->mCursorObject->mCursorType = CursorType::CURSOR_TYPE_PLANT_FROM_BANK;
+		mBoard->mCursorObject->mCursorType = LawnCursorType::CURSOR_TYPE_PLANT_FROM_BANK;
 		mBoard->mCursorObject->mSeedBankIndex = mIndex;
 		mApp->PlaySample(SOUND_SEEDLIFT);
 

@@ -2,7 +2,7 @@
 #define __SEEDCHOOSERSCREEN_H__
 
 #include "constenums.hpp"
-#include <PopLib/widget/widget.hpp>
+#include <widget/widget.hpp>
 
 using namespace PopLib;
 

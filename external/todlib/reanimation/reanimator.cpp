@@ -7,9 +7,9 @@
 #include "todlib/reanimation/reanimatlas.hpp"
 #include "todlib/effects/effectsystem.hpp"
 #include <gameconstants.hpp>
-#include <PopLib/graphics/font.hpp>
-#include <PopLib/debug/perftimer.hpp>
-#include <PopLib/graphics/memoryimage.hpp>
+#include <graphics/font.hpp>
+#include <debug/perftimer.hpp>
+#include <graphics/memoryimage.hpp>
 
 int gReanimatorDefCount;                     //[0x6A9EE4]
 ReanimatorDefinition* gReanimatorDefArray;   //[0x6A9EE8]

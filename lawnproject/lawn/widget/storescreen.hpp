@@ -4,7 +4,7 @@
 #include "constenums.hpp"
 #include "lawn/system/playerinfo.hpp"
 #include <todlib/dataarray.hpp>
-#include <PopLib/widget/dialog.hpp>
+#include <widget/dialog.hpp>
 
 using namespace PopLib;
 

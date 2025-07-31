@@ -3,7 +3,7 @@
 
 #include "todlib/todlist.hpp"
 #include "todlib/dataarray.hpp"
-#include <PopLib/math/vector.hpp>
+#include <math/vector.hpp>
 namespace PopLib
 {
 	class Image;

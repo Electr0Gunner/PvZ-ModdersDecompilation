@@ -4,7 +4,7 @@
 #include "todlib/reanimation/reanimator.hpp"
 #include "todlib/effects/todparticle.hpp"
 #include "todlib/effects/effectsystem.hpp"
-#include <Poplib/graphics/graphics.hpp>
+#include <graphics/graphics.hpp>
 
 Attachment::Attachment()
 {

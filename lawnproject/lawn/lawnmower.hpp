@@ -2,7 +2,7 @@
 #define __LAWNMOWER_H__
 
 #include "constenums.hpp"
-#include <PopLib/math/rect.hpp>
+#include <math/rect.hpp>
 
 class LawnApp;
 class Board;

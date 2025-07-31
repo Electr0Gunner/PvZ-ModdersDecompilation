@@ -1,7 +1,7 @@
 #include "todlib/todlist.hpp"
 #include <todlib/toddebug.hpp>
 #include "todlib/todcommon.hpp"
-#include <PopLib/debug/debug.hpp>
+#include <debug/debug.hpp>
 
 void TodAllocator::Initialize(int theGrowCount, int theItemSize)
 {

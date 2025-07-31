@@ -5,7 +5,7 @@
 #include "lawn/system/profilemgr.hpp"
 #include "lawn/system/playerinfo.hpp"
 #include <todlib/todstringfile.hpp>
-#include <Poplib/widget/listwidget.hpp>
+#include <widget/listwidget.hpp>
 
 static int gUserListWidgetColors[][3] = {  //0x69F274
     {  23,  24,  35 },

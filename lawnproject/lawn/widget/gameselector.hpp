@@ -2,8 +2,8 @@
 #define __GAMESELECTOR_H__
 
 #include "constenums.hpp"
-#include <PopLib/widget/widget.hpp>
-#include <PopLib/widget/buttonlistener.hpp>
+#include <widget/widget.hpp>
+#include <widget/buttonlistener.hpp>
 
 class LawnApp;
 class ToolTipWidget;

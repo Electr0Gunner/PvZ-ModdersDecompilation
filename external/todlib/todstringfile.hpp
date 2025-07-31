@@ -1,7 +1,7 @@
 #ifndef __TODSTRINGFILE_H__
 #define __TODSTRINGFILE_H__
 
-#include <Poplib/graphics/graphics.hpp>
+#include <graphics/graphics.hpp>
 using namespace PopLib;
 
 enum DrawStringJustification;

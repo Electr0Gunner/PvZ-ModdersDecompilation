@@ -1,6 +1,6 @@
 #include <map>
 #include "resources.hpp"
-#include <PopLib/resources/resourcemanager.hpp>
+#include <resources/resourcemanager.hpp>
 
 using namespace PopLib;
 

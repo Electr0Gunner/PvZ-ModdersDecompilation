@@ -2,7 +2,7 @@
 #define __MESSAGEWIDGET_H__
 
 #include "constenums.hpp"
-#include <PopLib/common.hpp>
+#include <common.hpp>
 
 #define MAX_MESSAGE_LENGTH 128
 #define MAX_REANIM_LINES 5

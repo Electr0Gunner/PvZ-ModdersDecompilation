@@ -1,9 +1,9 @@
 #ifndef __NEWOPTIONSDIALOG_H__
 #define __NEWOPTIONSDIALOG_H__
 
-#include <PopLib/widget/dialog.hpp>
-#include <PopLib/widget/sliderlistener.hpp>
-#include <PopLib/widget/checkboxlistener.hpp>
+#include <widget/dialog.hpp>
+#include <widget/sliderlistener.hpp>
+#include <widget/checkboxlistener.hpp>
 
 class LawnApp;
 class LawnStoneButton;

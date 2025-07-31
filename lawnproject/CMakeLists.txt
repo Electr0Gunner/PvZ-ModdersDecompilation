@@ -1,5 +1,7 @@
 project(LawnProject)
 
+set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 file(GLOB_RECURSE ALL_FILES CONFIGURE_DEPENDS
     "*.cpp" "*.c"
@@ -81,5 +83,4 @@ set_target_properties(${PROJECT_NAME}
     RUNTIME_OUTPUT_NAME ${PROJECT_NAME}
 )
 
-include(${CMAKE_SOURCE_DIR}/engine/cmake/CopyDLLPost.cmake)
 copy_dll_post(${PROJECT_NAME} ${BASS_PATH})
